@@ -1,18 +1,80 @@
-'use strict';
+"use strict";
+const { CATEGORIES, MODALITY } = require("../constants/course");
+
 module.exports = (sequelize, DataTypes) => {
-  const course = sequelize.define('course', {
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    shortDescription: DataTypes.STRING,
-    isFree: DataTypes.BOOLEAN,
-    coverImageUrl: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    urlVideos: DataTypes.STRING,
-    category: DataTypes.STRING,
-    modality: DataTypes.STRING,
-    averageRate: DataTypes.INTEGER
-  }, {});
-  course.associate = function(models) {
+  const course = sequelize.define(
+    "course",
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      shortDescription: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      isFree: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      coverImageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      urlVideos: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      category: {
+        type: DataTypes.ENUM(CATEGORIES),
+        allowNull: false,
+      },
+      modality: {
+        type: DataTypes.ENUM(MODALITY),
+        allowNull: false,
+      },
+      averageRate: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      deletedAt: {
+        allowNull: true,
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      timestamps: true,
+      paranoid: true,
+      underscored: true,
+      freezeTableName: true,
+    }
+  );
+  course.associate = function (models) {
     // associations can be defined here
   };
   return course;
