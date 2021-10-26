@@ -18,10 +18,16 @@ class User {
     }
     return user;
   }
+  static async getUserByEmail(email) {
+    const user = await UserModel.findOne({ where: { email } });
+    if (!user) {
+      throw notFound();
+    }
+    return user;
+  }
   static async createUser(data) {
     const { password } = data;
     const encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    console.log({ encryptedPassword }, "------------------");
     const [ADMIN, USER] = ROLES;
     const userData = {
       ...data,
@@ -72,7 +78,8 @@ class User {
 
     const encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     user.password = encryptedPassword;
-
+    recoveryCode.used = true;
+    await recoveryCode.save();
     return user.save();
   }
   static async updateUser(id, data) {

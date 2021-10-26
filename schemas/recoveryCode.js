@@ -11,12 +11,10 @@ const typeDef = `
 `;
 
 const resolvers = {
-  Query: {
-    
-  },
+  Query: {},
 };
 
 module.exports = {
-    typeDef,
-    resolvers
-}
+  typeDef,
+  resolvers,
+};

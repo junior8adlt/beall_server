@@ -6,6 +6,8 @@ const {
   courseResolvers,
   userMediaSchema,
   userMediaResolvers,
+  userCourseSchema,
+  userCourseResolvers,
 } = require("./schemas");
 /**
  * PRECAUCIÓN
@@ -21,20 +23,30 @@ const globalTypeDefs = `
     ${userSchema}
     ${courseSchema}
     ${userMediaSchema}
+    ${userCourseSchema}
     type Query {
-      user(id: Int!): User
+      # userSchema
+      user: User
       login(email: String!, password: String!): Auth
+      sendEmailToRecoverPassword(email: String!): Boolean
+      # courseSchema 
       course(id: Int!): Course
-      courses(title: String, category: Int): [Course]
-      categories: [Category]
+      courses(title: String, category: Category): [Course]
+      categories: [String]
+      # userCourseSchema
+      userCourses(title: String): [UserCourse]
     }
     type Mutation {
-      # USER MUTATIONS
-      updateUserPassword(code: String!, password: String!): User
-      updateUser(id: Int!, input: UserUpdateInput): User
+      # userSchema
+      updateUserPassword(code: String!, password: String!): Boolean
+      updateUser(input: UserUpdateInput): User
       createUser(input: UserInput): User
       activateUser(code: String!): Boolean
-      # USER MEDIA MUTATIONS
+      # courseSchema
+      saveCourseReview(input: CreateCourseReviewInput): CourseReview
+      # course(id: Int!): Course
+      # courses(title: String, category: String): [Course]
+      # userMediaSchema
       uploadUserImage(file: Upload!): String
         # course(id: Int!): Course
         # courses(title: String, category: Int): [Course]
@@ -44,5 +56,10 @@ const globalTypeDefs = `
 
 module.exports = {
   globalTypeDefs,
-  globalResolvers: merge(userResolvers, courseResolvers, userMediaResolvers),
+  globalResolvers: merge(
+    userResolvers,
+    courseResolvers,
+    userMediaResolvers,
+    userCourseResolvers
+  ),
 };

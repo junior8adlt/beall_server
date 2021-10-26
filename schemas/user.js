@@ -1,7 +1,10 @@
 const { UserController, RecoveryCodeController } = require("../controllers");
 const { validateAuth } = require("../libs/auth");
 const { generateRandomCode } = require("../libs/utils");
-const { sendEmailCode } = require("../libs/email");
+const {
+  sendEmailCode,
+  sendEmailRecoverPasswordCode,
+} = require("../libs/email");
 const { emailError } = require("../libs/errors");
 
 const sharedProperties = `
@@ -54,21 +57,45 @@ const typeDef = `
 
 const resolvers = {
   Query: {
-    user: (_, { id }, context) => {
+    user: (_, args, context) => {
       validateAuth(context);
-      return UserController.getUser(id);
+      const { user } = context;
+      return user;
     },
     login: (_, { email, password }, context) => {
       return UserController.login(email, password);
     },
+    sendEmailToRecoverPassword: async (_, { email }, context) => {
+      const user = await UserController.getUserByEmail(email);
+      const code = generateRandomCode();
+      const recoveryCodeData = {
+        code,
+        userId: user.id,
+      };
+      await RecoveryCodeController.create(recoveryCodeData);
+      const isEmailSent = await sendEmailRecoverPasswordCode(
+        code,
+        user.email
+      );
+      if (!isEmailSent) {
+        throw emailError();
+      }
+      return true;
+    },
   },
   Mutation: {
-    updateUserPassword: (_, { code, password }, context) => {
-      return UserController.updateUserPassword(code, password);
+    updateUserPassword: async (_, { code, password }, context) => {
+      try {
+        await UserController.updateUserPassword(code, password);
+        return true;
+      } catch (error) {
+        return error;
+      }
     },
-    updateUser: (_, { id, input }, context) => {
+    updateUser: (_, { input }, context) => {
       validateAuth(context);
-      return UserController.updateUser(id, input);
+      const { user } = context;
+      return UserController.updateUser(user.id, input);
     },
     createUser: async (_, { input }, context) => {
       const newUser = await UserController.createUser(input);

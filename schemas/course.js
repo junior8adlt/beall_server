@@ -1,3 +1,7 @@
+const { CourseController } = require("../controllers");
+const { CATEGORIES } = require("../constants/course");
+const { validateAuth } = require("../libs/auth");
+
 const typeDef = `
     enum Modality {
       OFFLINE
@@ -10,56 +14,73 @@ const typeDef = `
       MARRIAGE
     }
     type Course {
-        id: ID
-        title: String
-        description: String
-        shortDescription: String
-        isFree: Boolean
-        coverImageUrl: String
-        price: Int
-        urlVideos: String
-        category: Category
-        modality: Modality
-        averageRate: Int
-        createdAt: Date
-        updatedAt: Date
-        deletedAt: Date
+      id: ID
+      title: String
+      description: String
+      shortDescription: String
+      isFree: Boolean
+      coverImageUrl: String
+      price: Int
+      urlVideos: String
+      category: Category
+      modality: Modality
+      averageRate: Int
+      createdAt: Date
+      updatedAt: Date
+      deletedAt: Date
+    }
+    type CourseReview {
+      id: ID
+      comment: String
+      title: String
+      courseId: Int
+      rate: Float
+      userId: Int
+      createdAt: Date
+      updatedAt: Date
+      deletedAt: Date
+    }
+    input CreateCourseReviewInput {
+      comment: String!
+      title: String!
+      courseId: Int!
+      rate: Float!
     }
 `;
 
 const resolvers = {
   Query: {
     course: (_, { id }, context) => {
-      return {
-        id: id,
-      };
+      validateAuth(context);
+      return CourseController.get(id);
     },
     courses: (_, { title, category }, context) => {
-      if (title && category) {
-        return [{ title, category: { id: category } }];
-      }
-      if (title) {
-        return [{ title, category: { id: 1 } }];
-      }
-      if (category) {
-        return [{ title: "course 1", category: { id: category } }];
-      }
-      return [{ title: "course 1", category: { id: 1 } }];
+      validateAuth(context);
+      return CourseController.getFilter(title, category);
     },
-    categories: () => {
-      return [
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-        },
-      ];
+    categories: (_, args, context) => {
+      validateAuth(context);
+      return CATEGORIES;
+    },
+  },
+  Mutation: {
+    saveCourseReview: (_, { input }, context) => {
+      validateAuth(context);
+      const {
+        user
+      } = context
+      const { comment, title, courseId, rate } = input;
+      return CourseController.saveCourseReview(user.id, {
+        comment,
+        title,
+        courseId,
+        rate,
+      });
     },
   },
 };
 
 module.exports = {
-    typeDef,
-    resolvers
-}
+  typeDef,
+  resolvers,
+};

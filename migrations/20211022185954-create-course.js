@@ -16,16 +16,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      shortDescription: {
+      short_description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isFree: {
+      is_free: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      coverImageUrl: {
+      cover_image_url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
-      urlVideos: {
+      url_videos: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -46,20 +46,20 @@ module.exports = {
         type: Sequelize.ENUM(["OFFLINE", "ONLINE", "PRESENTIAL"]),
         allowNull: false,
       },
-      averageRate: {
+      average_rate: {
         type: Sequelize.DOUBLE,
         allowNull: false,
         defaultValue: 0,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      deletedAt: {
+      deleted_at: {
         allowNull: true,
         type: Sequelize.DATE,
       },

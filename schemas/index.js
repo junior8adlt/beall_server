@@ -7,6 +7,10 @@ const {
   typeDef: userMediaSchema,
   resolvers: userMediaResolvers,
 } = require("./userMedia");
+const {
+  typeDef: userCourseSchema,
+  resolvers: userCourseResolvers,
+} = require("./userCourse");
 
 module.exports = {
   userSchema,
@@ -15,4 +19,6 @@ module.exports = {
   courseResolvers,
   userMediaSchema,
   userMediaResolvers,
+  userCourseSchema,
+  userCourseResolvers,
 };
