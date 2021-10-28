@@ -2,6 +2,35 @@ const { CourseController } = require("../controllers");
 const { CATEGORIES } = require("../constants/course");
 const { validateAuth } = require("../libs/auth");
 
+const sharedProperties = `
+  id: ID
+  title: String
+  description: String
+  shortDescription: String
+  isFree: Boolean
+  coverImageUrl: String
+  price: Int
+  urlVideos: String
+  category: Category
+  modality: Modality
+  averageRate: Int
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date
+`;
+
+const courseReviewSharedProperties = `
+  id: ID
+  comment: String
+  title: String
+  courseId: Int
+  rate: Float
+  userId: Int
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date
+`;
+
 const typeDef = `
     enum Modality {
       OFFLINE
@@ -14,31 +43,18 @@ const typeDef = `
       MARRIAGE
     }
     type Course {
-      id: ID
-      title: String
-      description: String
-      shortDescription: String
-      isFree: Boolean
-      coverImageUrl: String
-      price: Int
-      urlVideos: String
-      category: Category
-      modality: Modality
-      averageRate: Int
-      createdAt: Date
-      updatedAt: Date
-      deletedAt: Date
+      ${sharedProperties}
     }
     type CourseReview {
-      id: ID
-      comment: String
-      title: String
-      courseId: Int
-      rate: Float
-      userId: Int
-      createdAt: Date
-      updatedAt: Date
-      deletedAt: Date
+      ${courseReviewSharedProperties}
+    }
+    type CourseReviewUser {
+      ${courseReviewSharedProperties}
+      user: User
+    }
+    type CourseView {
+      ${sharedProperties}
+      course_reviews: [CourseReviewUser]
     }
     input CreateCourseReviewInput {
       comment: String!

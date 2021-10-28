@@ -30,7 +30,7 @@ const globalTypeDefs = `
       login(email: String!, password: String!): Auth
       sendEmailToRecoverPassword(email: String!): Boolean
       # courseSchema 
-      course(id: Int!): Course
+      course(id: Int!): CourseView
       courses(title: String, category: Category): [Course]
       categories: [String]
       # userCourseSchema

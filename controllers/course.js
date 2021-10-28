@@ -3,13 +3,29 @@ const {
   course: CourseModel,
   user_course: UserCourseModel,
   course_review: CourseReviewModel,
+  user: UserModel,
   sequelize,
 } = require("../models");
 const { notFound, invalidComment } = require("../libs/errors");
 
 class Course {
   static async get(id) {
-    const course = await CourseModel.findOne({ where: { id } });
+    const course = await CourseModel.findOne({
+      where: { id },
+      include: [
+        {
+          model: CourseReviewModel,
+          required: true,
+          include: [
+            {
+              model: UserModel,
+              required: true
+            }
+          ]
+        },
+      ],
+    });
+
     if (!course) {
       throw notFound();
     }

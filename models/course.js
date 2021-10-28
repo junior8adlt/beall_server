@@ -75,7 +75,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   course.associate = function (models) {
-    // associations can be defined here
+    course.hasMany(models.course_review, {
+      foreignKey: 'course_id'
+    });
   };
   return course;
 };

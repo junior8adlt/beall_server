@@ -57,6 +57,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
+      imageUrl: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -79,7 +83,10 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.associate = function (models) {
     User.hasMany(models.recovery_code, {
-      foreignKey: 'user_id'
+      foreignKey: "user_id",
+    });
+    User.hasMany(models.course_review, {
+      foreignKey: "user_id",
     });
   };
   return User;
