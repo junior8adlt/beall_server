@@ -1,11 +1,11 @@
-const { UserController, RecoveryCodeController } = require("../controllers");
-const { validateAuth } = require("../libs/auth");
-const { generateRandomCode } = require("../libs/utils");
+const { UserController, RecoveryCodeController } = require('../controllers');
+const { validateAuth } = require('../libs/auth');
+const { generateRandomCode } = require('../libs/utils');
 const {
   sendEmailCode,
   sendEmailRecoverPasswordCode,
-} = require("../libs/email");
-const { emailError } = require("../libs/errors");
+} = require('../libs/email');
+const { emailError } = require('../libs/errors');
 
 const sharedProperties = `
   name: String
@@ -30,7 +30,7 @@ const typeDef = `
   }
   enum Gender {
     MALE
-    FAMALE
+    FEMALE
   }
   type Auth {
     token: String
@@ -73,10 +73,7 @@ const resolvers = {
         userId: user.id,
       };
       await RecoveryCodeController.create(recoveryCodeData);
-      const isEmailSent = await sendEmailRecoverPasswordCode(
-        code,
-        user.email
-      );
+      const isEmailSent = await sendEmailRecoverPasswordCode(code, user.email);
       if (!isEmailSent) {
         throw emailError();
       }
