@@ -1,14 +1,16 @@
-const { ApolloServer } = require("apollo-server-express");
-const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
-const express = require("express");
-const http = require("http");
-const { graphqlUploadExpress } = require("graphql-upload");
+const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const express = require('express');
+const http = require('http');
+const cors = require('cors');
 
-const { UserController } = require("./controllers");
+const { graphqlUploadExpress } = require('graphql-upload');
+
+const { UserController } = require('./controllers');
 // Only test
 // const { sendEmailCode } = require("./libs/email");
 
-const { globalTypeDefs, globalResolvers } = require("./schema");
+const { globalTypeDefs, globalResolvers } = require('./schema');
 
 async function startApolloServer(typeDefs, resolvers) {
   try {
@@ -21,13 +23,13 @@ async function startApolloServer(typeDefs, resolvers) {
       context: async ({ req }) => {
         try {
           // get the user token from the headers
-          const token = req.headers.authorization || "";
+          const token = req.headers.authorization || '';
           if (!token) {
             return { user: null };
           }
           // try to retrieve a user with the token
           const user = await UserController.getUserByToken(
-            token.replace("Bearer ", "")
+            token.replace('Bearer ', '')
           );
           return { user };
         } catch (error) {
@@ -37,6 +39,8 @@ async function startApolloServer(typeDefs, resolvers) {
     });
     await server.start();
     // This middleware should be added before calling `applyMiddleware`.
+    app.use(cors());
+
     app.use(graphqlUploadExpress());
     server.applyMiddleware({ app });
     await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
