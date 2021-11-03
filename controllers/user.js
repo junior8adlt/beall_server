@@ -1,14 +1,14 @@
-const bcrypt = require("bcrypt");
-const { AuthenticationError } = require("apollo-server-express");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const { AuthenticationError } = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
 const {
   user: UserModel,
   recovery_code: RecoveryCodeModel,
-} = require("../models");
-const { notFound } = require("../libs/errors");
+} = require('../models');
+const { notFound } = require('../libs/errors');
 const SALT_ROUNDS = 8;
-const SECRET_JWT = "BEALL20211008";
-const ROLES = ["ADMIN", "USER"];
+const SECRET_JWT = 'BEALL20211008';
+const ROLES = ['ADMIN', 'USER'];
 
 class User {
   static async getUser(id) {
@@ -101,11 +101,11 @@ class User {
   static async login(email, password) {
     const user = await UserModel.findOne({ where: { email, isActive: true } });
     if (!user) {
-      throw new AuthenticationError("Invalid email or password");
+      throw new AuthenticationError('Invalid email or password');
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      throw new AuthenticationError("Invalid email or password");
+      throw new AuthenticationError('Invalid email or password');
     }
 
     user.timesLoggedIn = user.timesLoggedIn + 1;
@@ -123,6 +123,7 @@ class User {
       token,
       role,
       mercadoPagoId,
+      user,
     };
   }
 }

@@ -36,6 +36,7 @@ const typeDef = `
     token: String
     role: Role
     mercadoPagoId: String
+    user: User
   }
   type User {
     id: ID
