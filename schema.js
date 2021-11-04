@@ -1,4 +1,4 @@
-const merge = require("lodash.merge");
+const merge = require('lodash.merge');
 const {
   userSchema,
   userResolvers,
@@ -8,7 +8,7 @@ const {
   userMediaResolvers,
   userCourseSchema,
   userCourseResolvers,
-} = require("./schemas");
+} = require('./schemas');
 /**
  * PRECAUCIÓN
  * EN EL ORDEN QUE SE DEFINA LOS SCHEMAS Y LOS RESOLVERS
@@ -35,6 +35,8 @@ const globalTypeDefs = `
       categories: [String]
       # userCourseSchema
       userCourses(title: String): [UserCourse]
+      # userMediaSchema
+      authImageKit: ImageKitAuth
     }
     type Mutation {
       # userSchema
