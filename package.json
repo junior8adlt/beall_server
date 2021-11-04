@@ -14,10 +14,19 @@
     "apollo-server-core": "^3.3.0",
     "apollo-server-express": "^3.3.0",
     "bcrypt": "^5.0.1",
+<<<<<<< Updated upstream
     "cors": "^2.8.5",
+=======
+<<<<<<< Updated upstream
+=======
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     "express": "^4.17.1",
     "graphql": "^15.6.0",
     "graphql-upload": "^12.0.0",
+    "imagekit": "^3.2.3",
     "jsonwebtoken": "^8.5.1",
     "lodash.merge": "^4.6.2",
     "nodemailer": "^6.7.0",
