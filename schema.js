@@ -33,6 +33,8 @@ const globalTypeDefs = `
       course(id: Int!): CourseView
       courses(title: String, category: Category): [Course]
       categories: [String]
+      # userMediaSchema
+      authImageKit: ImageKitAuth
       # userCourseSchema
       userCourses(title: String): [UserCourse]
     }
@@ -44,13 +46,6 @@ const globalTypeDefs = `
       activateUser(code: String!): Boolean
       # courseSchema
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
-      # course(id: Int!): Course
-      # courses(title: String, category: String): [Course]
-      # userMediaSchema
-      uploadUserImage(file: Upload!): String
-        # course(id: Int!): Course
-        # courses(title: String, category: Int): [Course]
-        # categories(): [Category]
     }
 `;
 
