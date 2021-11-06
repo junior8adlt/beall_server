@@ -23,6 +23,7 @@ const typeDef = `
   }
   input UserUpdateInput {
     ${sharedProperties}
+    imageUrl: String
   }
   enum Role {
     ADMIN
