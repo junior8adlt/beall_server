@@ -63,6 +63,10 @@ const resolvers = {
       const { user } = context;
       return user;
     },
+    getUserById: (_, { id }, context) => {
+      validateAuth(context);
+      return UserController.getUser(id);
+    },
     login: (_, { email, password }, context) => {
       return UserController.login(email, password);
     },

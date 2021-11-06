@@ -27,6 +27,7 @@ const globalTypeDefs = `
     type Query {
       # userSchema
       user: User
+      getUserById(id: Int!): User
       login(email: String!, password: String!): Auth
       sendEmailToRecoverPassword(email: String!): Boolean
       # courseSchema 
@@ -41,7 +42,7 @@ const globalTypeDefs = `
     type Mutation {
       # userSchema
       updateUserPassword(code: String!, password: String!): Boolean
-      updateUser(input: UserUpdateInput): User
+      updateUser(id: Int!, input: UserUpdateInput): User
       createUser(input: UserInput): User
       activateUser(code: String!): Boolean
       # courseSchema
