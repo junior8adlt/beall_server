@@ -6,9 +6,8 @@ const cors = require("cors");
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 
-const { graphqlUploadExpress } = require("graphql-upload");
-
 const { UserController } = require("./controllers");
+const expressRoutes = require('./routes');
 const env = require("./config/env");
 
 const { globalTypeDefs, globalResolvers } = require("./schema");
@@ -41,8 +40,7 @@ async function startApolloServer(typeDefs, resolvers) {
     await server.start();
     // This middleware should be added before calling `applyMiddleware`.
     app.use(cors());
-
-    app.use(graphqlUploadExpress());
+    app.use('/api', expressRoutes)
     server.applyMiddleware({ app });
     const { NODE_ENV, HOST, PORT } = env;
     await new Promise((resolve) =>
@@ -53,7 +51,10 @@ async function startApolloServer(typeDefs, resolvers) {
       access_token: env[NODE_ENV].mercadoPago,
     });
     console.log(
-      `🚀 Server ready at http://localhost:4000${server.graphqlPath}`
+      `🚀 Graphql server ready at http://${HOST}:${PORT}${server.graphqlPath}`
+    );
+    console.log(
+      `🚀 Express server ready at http://${HOST}:${PORT}/api`
     );
   } catch (error) {
     console.error({ error });
