@@ -4,15 +4,7 @@ const { validateAuth } = require("../libs/auth");
 
 const sharedProperties = `
   id: ID
-  title: String
-  description: String
-  shortDescription: String
-  isFree: Boolean
-  coverImageUrl: String
-  price: Int
-  urlVideos: String
-  category: Category
-  modality: Modality
+  ${courseSharedProperties}
   averageRate: Int
   createdAt: Date
   updatedAt: Date
@@ -29,6 +21,18 @@ const courseReviewSharedProperties = `
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
+`;
+
+const courseSharedProperties = `
+  title: String
+  description: String
+  shortDescription: String
+  isFree: Boolean
+  coverImageUrl: String
+  price: Int
+  urlVideos: String
+  category: Category
+  modality: Modality
 `;
 
 const typeDef = `
@@ -62,29 +66,30 @@ const typeDef = `
       courseId: Int!
       rate: Float!
     }
+    input CourseInput {
+      ${courseSharedProperties}
+    }
 `;
 
 const resolvers = {
   Query: {
     course: (_, { id }, context) => {
-      validateAuth(context);
+      // validateAuth(context);
       return CourseController.get(id);
     },
     courses: (_, { title, category }, context) => {
-      validateAuth(context);
+      // validateAuth(context);
       return CourseController.getFilter(title, category);
     },
     categories: (_, args, context) => {
-      validateAuth(context);
+      // validateAuth(context);
       return CATEGORIES;
     },
   },
   Mutation: {
     saveCourseReview: (_, { input }, context) => {
       validateAuth(context);
-      const {
-        user
-      } = context
+      const { user } = context;
       const { comment, title, courseId, rate } = input;
       return CourseController.saveCourseReview(user.id, {
         comment,
@@ -92,6 +97,18 @@ const resolvers = {
         courseId,
         rate,
       });
+    },
+    saveCourse: (_, { input }, context) => {
+      validateAuth(context);
+      return CourseController.createCourse(input);
+    },
+    updateCourse: (_, { id, input }, context) => {
+      validateAuth(context);
+      return CourseController.updateCourse(id, input);
+    },
+    updateCourse: (_, { id }, context) => {
+      validateAuth(context);
+      return CourseController.deleteCourseReview(id);
     },
   },
 };

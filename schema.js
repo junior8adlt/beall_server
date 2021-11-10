@@ -46,6 +46,9 @@ const globalTypeDefs = `
       activateUser(code: String!): Boolean
       # courseSchema
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
+      saveCourse(input: CourseInput!): Course
+      updateCourse(id: Int!, input: CourseInput): Course
+      updateCourse(id: Int!): Boolean
     }
 `;
 

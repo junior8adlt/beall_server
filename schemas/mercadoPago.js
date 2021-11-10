@@ -1,11 +1,5 @@
-const { UserController, RecoveryCodeController } = require("../controllers");
+const { MercadoPagoController, UserController } = require("../controllers");
 const { validateAuth } = require("../libs/auth");
-const { generateRandomCode } = require("../libs/utils");
-const {
-  sendEmailCode,
-  sendEmailRecoverPasswordCode,
-} = require("../libs/email");
-const { emailError } = require("../libs/errors");
 
 const typeDef = `
   enum CurrencyMercadoPago {
@@ -18,6 +12,7 @@ const typeDef = `
     services
   }
   input PreferenceItemsInput {
+    courseId: Int!
     title: String!
     currency_id: CurrencyMercadoPago!
     picture_url: String!
@@ -26,20 +21,36 @@ const typeDef = `
     quantity: Int!
     unit_price: Int!
   }
-  input PayerInput {
-    name: String
-    surname: String
-    email: String
-  }
 `;
-
+// createPreference probar
 const resolvers = {
-  Query: {},
   Mutation: {
-    createPreference: async (_, { referenceItemsInput, payerInput }, context) => {
+    createPreference: async (_, { referenceItemsInput }, context) => {
+      validateAuth(context);
+      const { user } = context;
       try {
-        
-        return true;
+        const cleanedItems = [...referenceItemsInput].map(
+          ({ courseId, ...rest }) => rest
+        );
+        const preference = await MercadoPagoController.createPreference(
+          cleanedItems,
+          {
+            name: user.name,
+            surname: user.lastName,
+            email: user.email,
+          }
+        );
+        const {
+          body: { id },
+        } = preference;
+        const manyUserCourses = referenceItemsInput.map((item) => ({
+          courseId: item.courseId,
+          userId: user.id,
+          isPay: false,
+          preferenceMercadoPagoId: id,
+        }));
+        await UserController.createManyUserCourse(manyUserCourses);
+        return id;
       } catch (error) {
         return error;
       }

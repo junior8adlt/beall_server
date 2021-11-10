@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const {
   user: UserModel,
   recovery_code: RecoveryCodeModel,
+  user_course: UserCourseModel
 } = require('../models');
 const { notFound } = require('../libs/errors');
 const SALT_ROUNDS = 8;
@@ -125,6 +126,9 @@ class User {
       mercadoPagoId,
       user,
     };
+  }
+  static async createManyUserCourse(arrayData) {
+    return UserCourseModel.bulkCreate(arrayData);
   }
 }
 

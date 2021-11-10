@@ -19,9 +19,9 @@ class Course {
           include: [
             {
               model: UserModel,
-              required: true
-            }
-          ]
+              required: true,
+            },
+          ],
         },
       ],
     });
@@ -105,18 +105,27 @@ class Course {
       throw invalidComment();
     }
   }
-  // static async createCourse(data) {
-  //   const { password } = data;
-  //   const encryptedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  //   console.log({ encryptedPassword }, "------------------");
-  //   const [ADMIN, USER] = ROLES;
-  //   const userData = {
-  //     ...data,
-  //     password: encryptedPassword,
-  //     role: USER,
-  //   };
-  //   return UserModel.create(userData);
-  // }
+  static async createCourse(data) {
+    return CourseModel.create(data);
+  }
+  static async updateCourse(id, data) {
+    const course = await CourseModel.findOne({ where: { id } });
+    if (!course) {
+      throw notFound();
+    }
+    return course.update(data);
+  }
+  static async deleteCourseReview(id) {
+    try {
+      await CourseReviewModel.destroy({
+        where: { id },
+      });
+      return true;
+    } catch (error) {
+      console.error(error, "--------------error");
+      return false;
+    }
+  }
 }
 
 module.exports = Course;

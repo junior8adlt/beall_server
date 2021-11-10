@@ -49,6 +49,7 @@ const typeDef = `
     cellphone: String
     gender: Gender
     age: Int
+    imageUrl: String
     mercadoPagoId: String
     role: Role
     createdAt: Date

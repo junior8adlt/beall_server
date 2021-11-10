@@ -1,9 +1,4 @@
 const mercadopago = require("mercadopago");
-const {
-  user: UserModel,
-  recovery_code: RecoveryCodeModel,
-} = require("../models");
-const { notFound } = require("../libs/errors");
 const env = require("../config/env");
 
 class MercadoPago {
@@ -21,17 +16,25 @@ class MercadoPago {
       auto_return: "approved",
       notification_url: "https://www.your-site.com/api/mercadoPago",
     };
-
-    mercadopago.preferences
-      .create(preference)
-      .then(function (response) {
-        res.json({
-          id: response.body.id,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const preferenceCreated = await mercadopago.preferences.create(
+        preference
+      );
+      return preferenceCreated;
+    } catch (error) {
+      console.error(error, "-------------------error");
+      throw error;
+    }
+    // await mercadopago.preferences
+    //   .create(preference)
+    //   .then(function (response) {
+    //     res.json({
+    //       id: response.body.id,
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
   static async isPayed(req, res) {
     const { topic, id } = req.query;

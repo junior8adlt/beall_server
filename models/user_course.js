@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      preferenceMercadoPagoId: { type: DataTypes.STRING },
       isPay: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
