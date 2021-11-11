@@ -31,7 +31,7 @@ const globalTypeDefs = `
       sendEmailToRecoverPassword(email: String!): Boolean
       # courseSchema 
       course(id: Int!): CourseView
-      courses(title: String, category: Category): [Course]
+      courses(title: String, category: Category): [Courses]
       categories: [String]
       # userMediaSchema
       authImageKit: ImageKitAuth

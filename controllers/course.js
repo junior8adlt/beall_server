@@ -9,13 +9,13 @@ const {
 const { notFound, invalidComment } = require("../libs/errors");
 
 class Course {
-  static async get(id) {
+  static async get(id, userId) {
     const course = await CourseModel.findOne({
       where: { id },
       include: [
         {
           model: CourseReviewModel,
-          required: true,
+          required: false,
           include: [
             {
               model: UserModel,
@@ -23,15 +23,20 @@ class Course {
             },
           ],
         },
+        {
+          model: UserCourseModel,
+          where: { userId },
+          required: false,
+        },
       ],
     });
 
     if (!course) {
       throw notFound();
     }
-    return course;
+    return { ...course.dataValues, user_courses: course.user_courses[0] || null };
   }
-  static async getFilter(title, category) {
+  static async getFilter(title, category, userId) {
     const conditional = { where: {} };
     if (title) {
       conditional.where.title = {
@@ -41,6 +46,16 @@ class Course {
     if (category) {
       conditional.where.category = category;
     }
+    if (userId) {
+      conditional.include = [
+        {
+          model: UserCourseModel,
+          where: { userId },
+          required: false,
+        }
+      ]
+    }
+
     const courses = await CourseModel.findAll(conditional);
     return courses;
   }

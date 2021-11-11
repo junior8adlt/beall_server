@@ -13,6 +13,10 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
+      preference_mercado_pago_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       user_id: {
         type: Sequelize.BIGINT,
         allowNull: false,

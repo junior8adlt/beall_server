@@ -11,6 +11,15 @@ const typeDef = `
     updatedAt: Date
     deletedAt: Date
   }
+  type UserCourseView {
+    id: ID
+    isPay: Boolean
+    userId: Int
+    courseId: Int
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date
+  }
 `;
 
 const resolvers = {

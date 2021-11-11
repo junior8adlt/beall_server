@@ -1,6 +1,6 @@
 const { CourseController } = require("../controllers");
 const { CATEGORIES } = require("../constants/course");
-const { validateAuth } = require("../libs/auth");
+const { validateAuth, validateAuthAdmin } = require("../libs/auth");
 
 const courseSharedProperties = `
   title: String
@@ -49,6 +49,10 @@ const typeDef = `
     type Course {
       ${sharedProperties}
     }
+    type Courses {
+      ${sharedProperties}
+      user_courses: [UserCourseView]
+    }
     type CourseReview {
       ${courseReviewSharedProperties}
     }
@@ -59,6 +63,7 @@ const typeDef = `
     type CourseView {
       ${sharedProperties}
       course_reviews: [CourseReviewUser]
+      user_courses: UserCourseView
     }
     input CreateCourseReviewInput {
       comment: String!
@@ -75,11 +80,18 @@ const resolvers = {
   Query: {
     course: (_, { id }, context) => {
       // validateAuth(context);
-      return CourseController.get(id);
+      let userId = 0
+      if (context.user) {
+        userId = context.user.id
+      }
+      return CourseController.get(id, userId);
     },
     courses: (_, { title, category }, context) => {
-      // validateAuth(context);
-      return CourseController.getFilter(title, category);
+      let userId = 0
+      if (context.user) {
+        userId = context.user.id
+      }
+      return CourseController.getFilter(title, category, userId);
     },
     categories: (_, args, context) => {
       // validateAuth(context);
@@ -99,15 +111,15 @@ const resolvers = {
       });
     },
     saveCourse: (_, { input }, context) => {
-      validateAuth(context);
+      validateAuthAdmin(context);
       return CourseController.createCourse(input);
     },
     updateCourse: (_, { id, input }, context) => {
-      validateAuth(context);
+      validateAuthAdmin(context);
       return CourseController.updateCourse(id, input);
     },
     deleteCourseReview: (_, { id }, context) => {
-      validateAuth(context);
+      validateAuthAdmin(context);
       return CourseController.deleteCourseReview(id);
     },
   },
