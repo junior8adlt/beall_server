@@ -2,6 +2,18 @@ const { CourseController } = require("../controllers");
 const { CATEGORIES } = require("../constants/course");
 const { validateAuth } = require("../libs/auth");
 
+const courseSharedProperties = `
+  title: String
+  description: String
+  shortDescription: String
+  isFree: Boolean
+  coverImageUrl: String
+  price: Int
+  urlVideos: String
+  category: Category
+  modality: Modality
+`;
+
 const sharedProperties = `
   id: ID
   ${courseSharedProperties}
@@ -21,18 +33,6 @@ const courseReviewSharedProperties = `
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
-`;
-
-const courseSharedProperties = `
-  title: String
-  description: String
-  shortDescription: String
-  isFree: Boolean
-  coverImageUrl: String
-  price: Int
-  urlVideos: String
-  category: Category
-  modality: Modality
 `;
 
 const typeDef = `
@@ -106,7 +106,7 @@ const resolvers = {
       validateAuth(context);
       return CourseController.updateCourse(id, input);
     },
-    updateCourse: (_, { id }, context) => {
+    deleteCourseReview: (_, { id }, context) => {
       validateAuth(context);
       return CourseController.deleteCourseReview(id);
     },

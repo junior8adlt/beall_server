@@ -48,7 +48,7 @@ const globalTypeDefs = `
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
       saveCourse(input: CourseInput!): Course
       updateCourse(id: Int!, input: CourseInput): Course
-      updateCourse(id: Int!): Boolean
+      deleteCourseReview(id: Int!): Boolean
     }
 `;
 
