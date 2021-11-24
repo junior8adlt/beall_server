@@ -25,11 +25,11 @@ const typeDef = `
 // createPreference probar
 const resolvers = {
   Mutation: {
-    createPreference: async (_, { referenceItemsInput }, context) => {
+    createPreference: async (_, { input }, context) => {
       validateAuth(context);
       const { user } = context;
       try {
-        const cleanedItems = [...referenceItemsInput].map(
+        const cleanedItems = [...input].map(
           ({ courseId, ...rest }) => rest
         );
         const preference = await MercadoPagoController.createPreference(
@@ -43,7 +43,7 @@ const resolvers = {
         const {
           body: { id },
         } = preference;
-        const manyUserCourses = referenceItemsInput.map((item) => ({
+        const manyUserCourses = input.map((item) => ({
           courseId: item.courseId,
           userId: user.id,
           isPay: false,

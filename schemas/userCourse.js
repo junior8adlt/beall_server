@@ -1,4 +1,4 @@
-const { CourseController } = require("../controllers");
+const { CourseController, UserController } = require("../controllers");
 const { validateAuth } = require("../libs/auth");
 
 const typeDef = `
@@ -28,6 +28,24 @@ const resolvers = {
       validateAuth(context);
       const { user } = context;
       return CourseController.getUserCourses(user.id, title);
+    },
+  },
+  Mutation: {
+    createUserCourse: async (_, { input }, context) => {
+      validateAuth(context);
+      const { user } = context;
+      try {
+        const manyUserCourses = input.map((courseId) => ({
+          courseId,
+          userId: user.id,
+          isPay: true,
+          preferenceMercadoPagoId: null,
+        }));
+        await UserController.createManyUserCourse(manyUserCourses);
+        return true;
+      } catch (error) {
+        return error;
+      }
     },
   },
 };

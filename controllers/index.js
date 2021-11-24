@@ -3,6 +3,7 @@ const RecoveryCodeController = require("./recoveryCode");
 const CourseController = require("./course");
 const MercadoPagoController = require("./mercadoPago");
 const UserMediaController = require("./userMedia");
+const PaymentLogController = require("./paymentLog");
 
 module.exports = {
   UserController,
@@ -10,4 +11,5 @@ module.exports = {
   CourseController,
   MercadoPagoController,
   UserMediaController,
+  PaymentLogController,
 };

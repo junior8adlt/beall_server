@@ -11,6 +11,10 @@ const {
   typeDef: userCourseSchema,
   resolvers: userCourseResolvers,
 } = require("./userCourse");
+const {
+  typeDef: mercadoPagoSchema,
+  resolvers: mercadoPagoResolvers,
+} = require("./mercadoPago");
 
 module.exports = {
   userSchema,
@@ -21,4 +25,6 @@ module.exports = {
   userMediaResolvers,
   userCourseSchema,
   userCourseResolvers,
+  mercadoPagoSchema,
+  mercadoPagoResolvers,
 };

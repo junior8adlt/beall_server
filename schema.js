@@ -8,6 +8,8 @@ const {
   userMediaResolvers,
   userCourseSchema,
   userCourseResolvers,
+  mercadoPagoSchema,
+  mercadoPagoResolvers
 } = require("./schemas");
 /**
  * PRECAUCIÓN
@@ -24,6 +26,7 @@ const globalTypeDefs = `
     ${courseSchema}
     ${userMediaSchema}
     ${userCourseSchema}
+    ${mercadoPagoSchema}
     type Query {
       # userSchema
       user: User
@@ -49,6 +52,10 @@ const globalTypeDefs = `
       saveCourse(input: CourseInput!): Course
       updateCourse(id: Int!, input: CourseInput): Course
       deleteCourseReview(id: Int!): Boolean
+      # userCourseSchema
+      createUserCourse(input: [Int]!): Boolean
+      # mercadoPagoSchema
+      createPreference(input: [PreferenceItemsInput]!): String
     }
 `;
 
@@ -58,6 +65,7 @@ module.exports = {
     userResolvers,
     courseResolvers,
     userMediaResolvers,
-    userCourseResolvers
+    userCourseResolvers,
+    mercadoPagoResolvers
   ),
 };
