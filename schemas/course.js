@@ -1,6 +1,6 @@
-const { CourseController } = require("../controllers");
-const { CATEGORIES } = require("../constants/course");
-const { validateAuth, validateAuthAdmin } = require("../libs/auth");
+const { CourseController } = require('../controllers');
+const { CATEGORIES } = require('../constants/course');
+const { validateAuth, validateAuthAdmin } = require('../libs/auth');
 
 const courseSharedProperties = `
   title: String
@@ -80,16 +80,16 @@ const resolvers = {
   Query: {
     course: (_, { id }, context) => {
       // validateAuth(context);
-      let userId = 0
+      let userId = 0;
       if (context.user) {
-        userId = context.user.id
+        userId = context.user.id;
       }
       return CourseController.get(id, userId);
     },
     courses: (_, { title, category }, context) => {
-      let userId = 0
+      let userId = 0;
       if (context.user) {
-        userId = context.user.id
+        userId = context.user.id;
       }
       return CourseController.getFilter(title, category, userId);
     },
@@ -113,6 +113,10 @@ const resolvers = {
     saveCourse: (_, { input }, context) => {
       validateAuthAdmin(context);
       return CourseController.createCourse(input);
+    },
+    deleteCourse: (_, { id }, context) => {
+      validateAuthAdmin(context);
+      return CourseController.deleteCourse(id);
     },
     updateCourse: (_, { id, input }, context) => {
       validateAuthAdmin(context);

@@ -1,4 +1,3 @@
-const generateRandomCode = () =>
-  Math.random().toString(36).slice(2).toUpperCase();
+const generateRandomCode = () => Math.floor(1000 + Math.random() * 9000);
 
 module.exports = { generateRandomCode };
