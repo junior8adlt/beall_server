@@ -1,12 +1,12 @@
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 const {
   course: CourseModel,
   user_course: UserCourseModel,
   course_review: CourseReviewModel,
   user: UserModel,
   sequelize,
-} = require("../models");
-const { notFound, invalidComment } = require("../libs/errors");
+} = require('../models');
+const { notFound, invalidComment } = require('../libs/errors');
 
 class Course {
   static async get(id, userId) {
@@ -34,7 +34,10 @@ class Course {
     if (!course) {
       throw notFound();
     }
-    return { ...course.dataValues, user_courses: course.user_courses[0] || null };
+    return {
+      ...course.dataValues,
+      user_courses: course.user_courses[0] || null,
+    };
   }
   static async getFilter(title, category, userId) {
     const conditional = { where: {} };
@@ -52,8 +55,8 @@ class Course {
           model: UserCourseModel,
           where: { userId },
           required: false,
-        }
-      ]
+        },
+      ];
     }
 
     const courses = await CourseModel.findAll(conditional);
@@ -84,7 +87,7 @@ class Course {
     const { comment, title, courseId, rate } = data;
     const isCoursePurchased = await UserCourseModel.findOne({
       where: { userId, courseId, isPay: true },
-      attributes: ["id"],
+      attributes: ['id'],
       raw: true,
     });
     if (!isCoursePurchased) {
@@ -92,7 +95,7 @@ class Course {
     }
     const isCourseCommented = await CourseReviewModel.findOne({
       where: { userId, courseId },
-      attributes: ["id"],
+      attributes: ['id'],
       raw: true,
     });
     if (isCourseCommented) {
@@ -107,7 +110,7 @@ class Course {
         userId,
       });
       const [avgReview] = await CourseReviewModel.findAll({
-        attributes: [[sequelize.fn("AVG", sequelize.col("rate")), "avgRate"]],
+        attributes: [[sequelize.fn('AVG', sequelize.col('rate')), 'avgRate']],
         where: { courseId },
         raw: true,
       });
@@ -123,6 +126,17 @@ class Course {
   static async createCourse(data) {
     return CourseModel.create(data);
   }
+  static async deleteCourse(id) {
+    try {
+      await CourseModel.destroy({
+        where: { id },
+      });
+      return true;
+    } catch (error) {
+      console.error(error, '--------------error');
+      return false;
+    }
+  }
   static async updateCourse(id, data) {
     const course = await CourseModel.findOne({ where: { id } });
     if (!course) {
@@ -137,7 +151,7 @@ class Course {
       });
       return true;
     } catch (error) {
-      console.error(error, "--------------error");
+      console.error(error, '--------------error');
       return false;
     }
   }

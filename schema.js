@@ -1,4 +1,4 @@
-const merge = require("lodash.merge");
+const merge = require('lodash.merge');
 const {
   userSchema,
   userResolvers,
@@ -9,8 +9,8 @@ const {
   userCourseSchema,
   userCourseResolvers,
   mercadoPagoSchema,
-  mercadoPagoResolvers
-} = require("./schemas");
+  mercadoPagoResolvers,
+} = require('./schemas');
 /**
  * PRECAUCIÓN
  * EN EL ORDEN QUE SE DEFINA LOS SCHEMAS Y LOS RESOLVERS
@@ -51,6 +51,7 @@ const globalTypeDefs = `
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
       saveCourse(input: CourseInput!): Course
       updateCourse(id: Int!, input: CourseInput): Course
+      deleteCourse(id: Int!): Boolean
       deleteCourseReview(id: Int!): Boolean
       # userCourseSchema
       createUserCourse(input: [Int]!): Boolean
