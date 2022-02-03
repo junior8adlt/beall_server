@@ -43,7 +43,7 @@ class Course {
     const conditional = { where: {} };
     if (title) {
       conditional.where.title = {
-        [Op.like]: `%${title.toLowerCase()}%`,
+        [Op.iLike]: `%${title.toLowerCase()}%`,
       };
     }
     if (category) {
@@ -66,7 +66,7 @@ class Course {
     const where = {};
     if (title) {
       where.title = {
-        [Op.like]: `%${title.toLowerCase()}%`,
+        [Op.iLike]: `%${title.toLowerCase()}%`,
       };
     }
     const courses = await UserCourseModel.findAll({
