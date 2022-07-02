@@ -2,6 +2,8 @@ const merge = require('lodash.merge');
 const {
   userSchema,
   userResolvers,
+  collaboratorSchema,
+  collaboratorResolvers,
   courseSchema,
   courseResolvers,
   userMediaSchema,
@@ -23,6 +25,7 @@ const globalTypeDefs = `
     scalar Upload
     scalar Date
     ${userSchema}
+    ${collaboratorSchema}
     ${courseSchema}
     ${userMediaSchema}
     ${userCourseSchema}
@@ -32,6 +35,10 @@ const globalTypeDefs = `
       user: User
       login(email: String!, password: String!): Auth
       sendEmailToRecoverPassword(email: String!): Boolean
+      # collaboratorSchema
+      collaborators: [Collaborator]
+      collaboratorById(id: ID!): Collaborator
+      collaboratorBySlug(slug: String!): Collaborator
       # courseSchema 
       course(id: Int!): CourseView
       courses(title: String, category: Category): [Courses]
@@ -47,6 +54,10 @@ const globalTypeDefs = `
       updateUser(input: UserUpdateInput): User
       createUser(input: UserInput): User
       activateUser(code: String!): Boolean
+      # collaboratorSchema
+      createCollaborator(input: CollaboratorInput): Collaborator
+      updateCollaborator(id: Int!, input: CollaboratorInput): Collaborator
+      deleteCollaborator(id: Int!): Boolean
       # courseSchema
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
       saveCourse(input: CourseInput!): Course
@@ -64,6 +75,7 @@ module.exports = {
   globalTypeDefs,
   globalResolvers: merge(
     userResolvers,
+    collaboratorResolvers,
     courseResolvers,
     userMediaResolvers,
     userCourseResolvers,
