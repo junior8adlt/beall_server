@@ -1,5 +1,7 @@
 'use strict';
 
+const collaboratorConsultancies = require('./collaboratorConsultancies');
+
 module.exports = (sequelize, DataTypes) => {
   const Collaborator = sequelize.define(
     'collaborator',
@@ -47,10 +49,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      consultancies: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -73,6 +71,12 @@ module.exports = (sequelize, DataTypes) => {
   );
   Collaborator.associate = function (models) {
     // associations can be defined here
+    Collaborator.belongsToMany(models.consultancies, {
+      through: 'collaborator_consultancies',
+      as: 'consultancies',
+      foreignKey: 'collaboratorId',
+    });
   };
+
   return Collaborator;
 };

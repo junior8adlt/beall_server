@@ -12,6 +12,8 @@ const {
   userCourseResolvers,
   mercadoPagoSchema,
   mercadoPagoResolvers,
+  consultancieSchema,
+  consultancieResolvers,
 } = require('./schemas');
 /**
  * PRECAUCIÓN
@@ -30,6 +32,7 @@ const globalTypeDefs = `
     ${userMediaSchema}
     ${userCourseSchema}
     ${mercadoPagoSchema}
+    ${consultancieSchema}
     type Query {
       # userSchema
       user: User
@@ -39,6 +42,9 @@ const globalTypeDefs = `
       collaborators: [Collaborator]
       collaboratorById(id: ID!): Collaborator
       collaboratorBySlug(slug: String!): Collaborator
+      # consultancieSchema
+      consultancies: [Consultancie]
+      consultancieById(id: ID!): Consultancie
       # courseSchema 
       course(id: Int!): CourseView
       courses(title: String, category: Category): [Courses]
@@ -58,6 +64,10 @@ const globalTypeDefs = `
       createCollaborator(input: CollaboratorInput): Collaborator
       updateCollaborator(id: Int!, input: CollaboratorInput): Collaborator
       deleteCollaborator(id: Int!): Boolean
+      # consultancieSchema
+      createConsultancie(input: ConsultancieInput): Consultancie
+      updateConsultancie(id: Int!, input: ConsultancieInput): Consultancie
+      deleteConsultancie(id: Int!): Boolean
       # courseSchema
       saveCourseReview(input: CreateCourseReviewInput): CourseReview
       saveCourse(input: CourseInput!): Course
@@ -79,6 +89,7 @@ module.exports = {
     courseResolvers,
     userMediaResolvers,
     userCourseResolvers,
-    mercadoPagoResolvers
+    mercadoPagoResolvers,
+    consultancieResolvers,
   ),
 };

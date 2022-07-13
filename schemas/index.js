@@ -21,6 +21,11 @@ const {
   resolvers: mercadoPagoResolvers,
 } = require('./mercadoPago');
 
+const {
+  typeDef: consultancieSchema,
+  resolvers: consultancieResolvers,
+} = require('./consultancies');
+
 module.exports = {
   userSchema,
   userResolvers,
@@ -34,4 +39,6 @@ module.exports = {
   userCourseResolvers,
   mercadoPagoSchema,
   mercadoPagoResolvers,
+  consultancieSchema,
+  consultancieResolvers,
 };

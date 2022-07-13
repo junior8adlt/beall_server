@@ -46,10 +46,6 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
-      consultancies: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
-        allowNull: true,
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

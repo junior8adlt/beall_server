@@ -1,6 +1,6 @@
 const { CollaboratorController } = require('../controllers');
 const { validateAuthAdmin } = require('../libs/auth');
-
+const sequelize = require('../models/index').sequelize;
 const typeDef = `
 enum Gender {
     MALE
@@ -17,11 +17,15 @@ type Collaborator {
   cellphone: String
   gender: Gender
   age: Int
+  consultancies: [Consultancie]
   profileImageUrl: String
-  consultancies: [String]
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
+}
+input UpdateConsultancie {
+  addedConsultancies: [Int]
+  removedConsultancies: [Int]
 }
 
 input CollaboratorInput {
@@ -33,6 +37,7 @@ input CollaboratorInput {
   gender: Gender
   age: Int
   profileImageUrl: String
+  consultancies: [UpdateConsultancie]
 }
 `;
 
@@ -49,17 +54,74 @@ const resolvers = {
     },
   },
   Mutation: {
-    createCollaborator: (_, { input }, context) => {
+    createCollaborator: async (_, { input }, context) => {
       validateAuthAdmin(context);
-      return CollaboratorController.createCollaborator(input);
+      const { consultancies: collaboratorConsultancies, ...rest } = input;
+      const t = await sequelize.transaction();
+      try {
+        const collaborator = await CollaboratorController.createCollaborator(rest, t);
+        if (collaboratorConsultancies.length > 0) {
+          const addedConsultancies = collaboratorConsultancies[0]['addedConsultancies'];
+          const consultancies = addedConsultancies.map((consultancy) => {
+            return {
+              collaboratorId: collaborator.dataValues.id,
+              consultancieId: consultancy,
+            };
+          });
+          await CollaboratorController.assignManyConsultanciesToCollaborator(consultancies, t);
+        }
+        await t.commit();
+        return collaborator;
+      } catch (error) {
+        await t.rollback();
+        return error;
+      }
     },
-    deleteCollaborator: (_, { id }, context) => {
+    deleteCollaborator: async (_, { id }, context) => {
       validateAuthAdmin(context);
+      const collaborator = await CollaboratorController.getCollaboratorById(id);
+      if (!collaborator) {
+        throw notFound();
+      }
+      const { consultancies } = collaborator;
+
+      if (consultancies.length > 0) {
+        const removedConsultanciesIds = consultancies.map((consultancy) => {
+          return consultancy.id;
+        });
+        await CollaboratorController.deleteManyConsultanciesFromCollaborator(
+          removedConsultanciesIds,
+          id,
+        );
+      }
       return CollaboratorController.deleteCollaborator(id);
     },
-    updateCollaborator: (_, { id, input }, context) => {
+    updateCollaborator: async (_, { id, input }, context) => {
       validateAuthAdmin(context);
-      return CollaboratorController.updateCollaborator(id, input);
+      const { consultancies, ...rest } = input;
+      if (consultancies.length > 0) {
+        const addedConsultancies = consultancies[0]['addedConsultancies'];
+        const removedConsultancies = consultancies[0]['removedConsultancies'];
+        if (addedConsultancies.length > 0) {
+          const addedConsultanciesToCollaborator = addedConsultancies.map((consultancyId) => {
+            return {
+              collaboratorId: id,
+              consultancieId: consultancyId,
+            };
+          });
+          await CollaboratorController.assignManyConsultanciesToCollaborator(
+            addedConsultanciesToCollaborator,
+          );
+        }
+        if (removedConsultancies.length > 0) {
+          await CollaboratorController.deleteManyConsultanciesFromCollaborator(
+            removedConsultancies,
+            id,
+          );
+        }
+      }
+
+      return CollaboratorController.updateCollaborator(id, rest);
     },
   },
 };

@@ -5,6 +5,8 @@ const CourseController = require('./course');
 const MercadoPagoController = require('./mercadoPago');
 const UserMediaController = require('./userMedia');
 const PaymentLogController = require('./paymentLog');
+const ConsultanciesController = require('./consultancies');
+const StripeController = require('./stripe');
 
 module.exports = {
   UserController,
@@ -14,4 +16,6 @@ module.exports = {
   MercadoPagoController,
   UserMediaController,
   PaymentLogController,
+  ConsultanciesController,
+  StripeController,
 };
