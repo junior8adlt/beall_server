@@ -1,6 +1,6 @@
 const env = require('../config/env');
 const { NODE_ENV } = env;
-const stripe = require('stripe')(env[NODE_ENV].stripeSecretKey);
+const stripe = require('stripe')(env[NODE_ENV].STRIPE_SECRET_KEY);
 
 class Stripe {
   static async checkout(req, res) {

@@ -1,5 +1,6 @@
 const { CollaboratorController } = require('../controllers');
 const { validateAuthAdmin } = require('../libs/auth');
+const { notFound } = require('../libs/errors');
 const sequelize = require('../models/index').sequelize;
 const typeDef = `
 enum Gender {

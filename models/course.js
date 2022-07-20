@@ -1,9 +1,9 @@
-"use strict";
-const { CATEGORIES, MODALITY } = require("../constants/course");
+'use strict';
+const { CATEGORIES, MODALITY } = require('../constants/course');
 
 module.exports = (sequelize, DataTypes) => {
   const course = sequelize.define(
-    "course",
+    'course',
     {
       id: {
         allowNull: false,
@@ -72,14 +72,14 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-    }
+    },
   );
   course.associate = function (models) {
     course.hasMany(models.course_review, {
-      foreignKey: 'course_id'
+      foreignKey: 'course_id',
     });
     course.hasMany(models.user_course, {
-      foreignKey: 'course_id'
+      foreignKey: 'course_id',
     });
   };
   return course;

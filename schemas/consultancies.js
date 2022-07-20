@@ -1,5 +1,6 @@
 const { ConsultanciesController } = require('../controllers');
 const { validateAuthAdmin } = require('../libs/auth');
+const { notFound } = require('../libs/errors');
 
 const typeDef = `
 type Consultancie {
@@ -28,10 +29,25 @@ const resolvers = {
   Mutation: {
     createConsultancie: (_, { input }, context) => {
       validateAuthAdmin(context);
+
       return ConsultanciesController.createConsultancie(input);
     },
-    deleteConsultancie: (_, { id }, context) => {
+    deleteConsultancie: async (_, { id }, context) => {
       validateAuthAdmin(context);
+      const consultancy = await ConsultanciesController.getConsultancieById(id);
+      if (!consultancy) {
+        throw notFound();
+      }
+      const { collaborators } = consultancy;
+      if (collaborators.length > 0) {
+        const removedCollaboratorsIds = collaborators.map((collaborator) => {
+          return collaborator.id;
+        });
+        await ConsultanciesController.deleteManyCollaboratorsFromConsultancy(
+          removedCollaboratorsIds,
+          id,
+        );
+      }
       return ConsultanciesController.deleteConsultancie(id);
     },
     updateConsultancie: (_, { id, input }, context) => {
