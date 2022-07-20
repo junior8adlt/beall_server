@@ -1,0 +1,2 @@
+> beall_backend@1.0.0 start
+> set NODE_ENV=production && node ./index.js

@@ -1,24 +1,36 @@
-const { typeDef: userSchema, resolvers: userResolvers } = require("./user");
+const { typeDef: userSchema, resolvers: userResolvers } = require('./user');
+const {
+  typeDef: collaboratorSchema,
+  resolvers: collaboratorResolvers,
+} = require('./collaborator');
+
 const {
   typeDef: courseSchema,
   resolvers: courseResolvers,
-} = require("./course");
+} = require('./course');
 const {
   typeDef: userMediaSchema,
   resolvers: userMediaResolvers,
-} = require("./userMedia");
+} = require('./userMedia');
 const {
   typeDef: userCourseSchema,
   resolvers: userCourseResolvers,
-} = require("./userCourse");
+} = require('./userCourse');
 const {
   typeDef: mercadoPagoSchema,
   resolvers: mercadoPagoResolvers,
-} = require("./mercadoPago");
+} = require('./mercadoPago');
+
+const {
+  typeDef: consultancieSchema,
+  resolvers: consultancieResolvers,
+} = require('./consultancies');
 
 module.exports = {
   userSchema,
   userResolvers,
+  collaboratorSchema,
+  collaboratorResolvers,
   courseSchema,
   courseResolvers,
   userMediaSchema,
@@ -27,4 +39,6 @@ module.exports = {
   userCourseResolvers,
   mercadoPagoSchema,
   mercadoPagoResolvers,
+  consultancieSchema,
+  consultancieResolvers,
 };

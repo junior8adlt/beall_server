@@ -1,9 +1,10 @@
 'use strict';
-const { CATEGORIES, MODALITY } = require('../constants/course');
+
+const collaboratorConsultancies = require('./collaboratorConsultancies');
 
 module.exports = (sequelize, DataTypes) => {
-  const course = sequelize.define(
-    'course',
+  const Collaborator = sequelize.define(
+    'collaborator',
     {
       id: {
         allowNull: false,
@@ -11,48 +12,42 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      title: {
+      slug: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      shortDescription: {
+      degree: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      isFree: {
-        type: DataTypes.BOOLEAN,
+      presentationDesc: {
+        type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: false,
       },
-      coverImageUrl: {
+      cellphone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      price: {
-        type: DataTypes.DOUBLE,
-        allowNull: false,
-        defaultValue: 0,
-      },
-      urlVideos: {
-        type: DataTypes.STRING,
+      gender: {
+        type: DataTypes.ENUM(['MALE', 'FAMALE']),
         allowNull: false,
       },
-      category: {
-        type: DataTypes.ENUM(CATEGORIES),
+      age: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      modality: {
-        type: DataTypes.ENUM(MODALITY),
-        allowNull: false,
-      },
-      averageRate: {
-        type: DataTypes.DOUBLE,
-        allowNull: false,
-        defaultValue: 0,
+      profileImageUrl: {
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -72,15 +67,16 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-    },
+    }
   );
-  course.associate = function (models) {
-    course.hasMany(models.course_review, {
-      foreignKey: 'course_id',
-    });
-    course.hasMany(models.user_course, {
-      foreignKey: 'course_id',
+  Collaborator.associate = function (models) {
+    // associations can be defined here
+    Collaborator.belongsToMany(models.consultancies, {
+      through: 'collaborator_consultancies',
+      as: 'consultancies',
+      foreignKey: 'collaboratorId',
     });
   };
-  return course;
+
+  return Collaborator;
 };
