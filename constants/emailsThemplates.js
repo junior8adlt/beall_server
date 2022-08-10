@@ -1,6 +1,5 @@
 const activateAccount = (code) => {
-  const activationUrl = `http://localhost:3001/activate-account?code=${code}`;
-  console.log(process.env);
+  const activationUrl = `http://localhost:3001/activar-cuenta?code=${code}`;
   return `
   <div style="background-color: #f4f3ee; height: 100vh">
   <div style="width: 100%; height: 6rem; background-color: #F3D3C4"></div>
