@@ -3,6 +3,8 @@ const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago');
 require('dotenv').config({ path: __dirname + '/.env' });
@@ -38,6 +40,7 @@ async function startApolloServer(typeDefs, resolvers) {
     await server.start();
     // This middleware should be added before calling `applyMiddleware`.
     app.use(cors());
+    app.use(bodyParser.json());
     app.use('/api', expressRoutes);
     server.applyMiddleware({ app });
     const { NODE_ENV, HOST, PORT } = env;
