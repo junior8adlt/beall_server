@@ -4,8 +4,6 @@ const stripe = require('stripe')(env[NODE_ENV].STRIPE_SECRET_KEY);
 
 class Stripe {
   static async checkout(req, res) {
-    console.log('req.body--------------------', req.body);
-    console.log('res-------------------', res);
     const { title, price } = req.body;
     try {
       const params = {
