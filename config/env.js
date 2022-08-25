@@ -18,6 +18,7 @@ module.exports = {
     IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT,
     IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
     IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     successUrl: 'http://localhost:8080/feedback',
     failureUrl: 'http://localhost:8080/feedback',
     pendingUrl: 'http://localhost:8080/feedback',
