@@ -1,5 +1,5 @@
-const { CourseController, UserController } = require("../controllers");
-const { validateAuth } = require("../libs/auth");
+const { CourseController, UserController } = require('../controllers');
+const { validateAuth } = require('../libs/auth');
 
 const typeDef = `
   type UserCourse {
@@ -39,7 +39,6 @@ const resolvers = {
           courseId,
           userId: user.id,
           isPay: true,
-          preferenceMercadoPagoId: null,
         }));
         await UserController.createManyUserCourse(manyUserCourses);
         return true;

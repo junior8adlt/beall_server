@@ -4,7 +4,7 @@ const stripe = require('stripe')(env[NODE_ENV].STRIPE_SECRET_KEY);
 
 class Stripe {
   static async checkout(req, res) {
-    const { title, price } = req.body;
+    const { title, price, courseId } = req.body;
     try {
       const params = {
         submit_type: 'pay',
@@ -43,7 +43,7 @@ class Stripe {
         //   };
         // }),
 
-        success_url: `${req.headers.origin}/success`,
+        success_url: `${req.headers.origin}/success?courseId=${courseId}`,
         cancel_url: `${req.headers.origin}/cursos`,
       };
       // Create Checkout Sessions from body params.

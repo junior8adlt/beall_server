@@ -13,19 +13,16 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
-      preference_mercado_pago_id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+
       user_id: {
         type: Sequelize.BIGINT,
         allowNull: false,
         references: {
           model: {
             tableName: 'user',
-            schema: 'public'
+            schema: 'public',
           },
-          key: 'id'
+          key: 'id',
         },
       },
       course_id: {
@@ -34,9 +31,9 @@ module.exports = {
         references: {
           model: {
             tableName: 'course',
-            schema: 'public'
+            schema: 'public',
           },
-          key: 'id'
+          key: 'id',
         },
       },
       created_at: {
@@ -55,5 +52,5 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('user_course');
-  }
+  },
 };

@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const UserCourse = sequelize.define(
-    "user_course",
+    'user_course',
     {
       id: {
         allowNull: false,
@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      preferenceMercadoPagoId: { type: DataTypes.STRING },
       isPay: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -20,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: {
           model: {
-            tableName: "user",
-            schema: "public",
+            tableName: 'user',
+            schema: 'public',
           },
-          key: "id",
+          key: 'id',
         },
       },
       courseId: {
@@ -31,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: {
           model: {
-            tableName: "course",
-            schema: "public",
+            tableName: 'course',
+            schema: 'public',
           },
-          key: "id",
+          key: 'id',
         },
       },
       createdAt: {
@@ -55,17 +54,17 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-    }
+    },
   );
   UserCourse.associate = function (models) {
     // associations can be defined here
     UserCourse.belongsTo(models.user, {
-      targetKey: "id",
-      foreignKey: "user_id",
+      targetKey: 'id',
+      foreignKey: 'user_id',
     });
     UserCourse.belongsTo(models.course, {
-      targetKey: "id",
-      foreignKey: "course_id",
+      targetKey: 'id',
+      foreignKey: 'course_id',
     });
   };
   return UserCourse;

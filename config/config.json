@@ -14,12 +14,12 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "f4qRFLw4DFrjFCAMUtpi",
-    "database": "railway",
-    "host": "containers-us-west-83.railway.app",
+    "username": "be_all_user",
+    "password": "XES2FJAlOQv2rVeA2lj9BsdloS72KVmv",
+    "database": "be_all",
+    "host": "dpg-cc3gifqrrk05b6o589p0-a.oregon-postgres.render.com",
     "dialect": "postgres",
-    "port": 6456,
+    "port": 5432,
     "dialectOptions": {
       "ssl": {
         "require": true,
