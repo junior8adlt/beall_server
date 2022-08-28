@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       degree: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       presentationDesc: {
         type: DataTypes.TEXT,
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       profileImageUrl: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-    }
+    },
   );
   Collaborator.associate = function (models) {
     // associations can be defined here

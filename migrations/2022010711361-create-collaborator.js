@@ -23,7 +23,7 @@ module.exports = {
       },
       degree: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       presentation_desc: {
         type: Sequelize.TEXT,

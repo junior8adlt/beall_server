@@ -13,11 +13,11 @@ module.exports = {
         allowNull: false,
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       short_description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       is_free: {
@@ -26,8 +26,8 @@ module.exports = {
         defaultValue: false,
       },
       cover_image_url: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       price: {
         type: Sequelize.DOUBLE,
@@ -35,8 +35,8 @@ module.exports = {
         defaultValue: 0,
       },
       url_videos: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       category: {
         type: Sequelize.ENUM(["PERSONAL", "FAMILY", "MARRIAGE"]),

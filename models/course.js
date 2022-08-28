@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       shortDescription: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       isFree: {
@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
       coverImageUrl: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       price: {
         type: DataTypes.DOUBLE,
@@ -38,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       urlVideos: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       category: {
         type: DataTypes.ENUM(CATEGORIES),
