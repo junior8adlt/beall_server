@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      zoomLink: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       category: {
         type: DataTypes.ENUM(CATEGORIES),
         allowNull: false,

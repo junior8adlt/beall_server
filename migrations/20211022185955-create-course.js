@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       title: {
         type: Sequelize.STRING,
@@ -38,12 +38,16 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      zoom_link: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
       category: {
-        type: Sequelize.ENUM(["PERSONAL", "FAMILY", "MARRIAGE"]),
+        type: Sequelize.ENUM(['PERSONAL', 'FAMILY', 'MARRIAGE']),
         allowNull: false,
       },
       modality: {
-        type: Sequelize.ENUM(["OFFLINE", "ONLINE", "PRESENTIAL"]),
+        type: Sequelize.ENUM(['OFFLINE', 'ONLINE', 'PRESENTIAL']),
         allowNull: false,
       },
       average_rate: {
@@ -67,5 +71,5 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('course');
-  }
+  },
 };

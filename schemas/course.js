@@ -10,6 +10,7 @@ const courseSharedProperties = `
   coverImageUrl: String
   price: Int
   urlVideos: String
+  zoomLink: String
   category: Category
   modality: Modality
 `;
