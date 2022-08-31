@@ -39,8 +39,11 @@ class User {
   }
   static async activateUser(code) {
     const recoveryCode = await RecoveryCodeModel.findOne({ where: { code } });
-    if (!recoveryCode || recoveryCode.used) {
-      throw notFound();
+    if (!recoveryCode) {
+      throw new AuthenticationError('Code not found');
+    }
+    if (recoveryCode.used) {
+      throw new AuthenticationError('Code already used');
     }
     const user = await UserModel.findOne({
       where: { id: recoveryCode.userId },
@@ -111,7 +114,7 @@ class User {
 
     user.timesLoggedIn = user.timesLoggedIn + 1;
     await user.save();
-    const { email: userEmail, name, lastName, mercadoPagoId, role } = user;
+    const { email: userEmail, name, lastName, role } = user;
     const token = jwt.sign(
       {
         userEmail,
@@ -123,7 +126,6 @@ class User {
     return {
       token,
       role,
-      mercadoPagoId,
       user,
     };
   }
