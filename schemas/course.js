@@ -11,8 +11,10 @@ const courseSharedProperties = `
   price: Int
   urlVideos: String
   zoomLink: String
+  zoomDatetime: Date
   category: Category
   modality: Modality
+
 `;
 
 const sharedProperties = `

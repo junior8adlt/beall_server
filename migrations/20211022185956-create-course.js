@@ -42,6 +42,11 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      zoom_datetime: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+
       category: {
         type: Sequelize.ENUM(['PERSONAL', 'FAMILY', 'MARRIAGE']),
         allowNull: false,

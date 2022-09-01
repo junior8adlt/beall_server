@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      zoomDatetime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       category: {
         type: DataTypes.ENUM(CATEGORIES),
         allowNull: false,
