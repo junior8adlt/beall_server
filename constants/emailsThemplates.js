@@ -1,5 +1,5 @@
 const activateAccount = (code) => {
-  const activationUrl = `http://localhost:3001/activar-cuenta?code=${code}`;
+  const activationUrl = `https://beall-frontend.vercel.app/activar-cuenta?code=${code}`;
   return `
   <div style="background-color: #f4f3ee; height: 100vh">
   <div style="width: 100%; height: 6rem; background-color: #F3D3C4"></div>
@@ -138,7 +138,7 @@ const recoverPassword = (code) => {
       </tr>
       <tr>
         <td>
-          <p style="font-weight: bold">${code}</p>
+          <p style="font-weight: bold; font-size: 18px;">${code}</p>
         </td>
       </tr>
 
