@@ -34,6 +34,8 @@ class Course {
     if (!course) {
       throw notFound();
     }
+
+    course.dataValues.averageRate = Math.round(course.dataValues.averageRate);
     return {
       ...course.dataValues,
       user_courses: course.user_courses[0] || null,
@@ -80,6 +82,10 @@ class Course {
       ],
       raw: true,
       nest: true,
+    });
+
+    courses.forEach((course) => {
+      course.course.averageRate = Math.round(course.course.averageRate);
     });
     return courses;
   }
