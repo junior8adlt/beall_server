@@ -62,7 +62,12 @@ class Course {
     }
 
     const courses = await CourseModel.findAll(conditional);
-    return courses;
+    return courses.map((course) => {
+      course.dataValues.averageRate = Math.round(course.dataValues.averageRate);
+      return {
+        ...course.dataValues,
+      };
+    });
   }
   static async getUserCourses(userId, title) {
     const where = {};
