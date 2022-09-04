@@ -2,10 +2,10 @@ const activateAccount = (code) => {
   const activationUrl = `https://beall-frontend.vercel.app/activar-cuenta?code=${code}`;
   return `
   <div style="background-color: #f4f3ee; height: 100vh">
-  <div style="width: 100%; height: 6rem; background-color: #F3D3C4"></div>
+  <div style="width: 100%; height: 6rem; background-color: #f3d3c4"></div>
   <table
     style="
-      width: 60%;
+      width: 100%;
       height: 40rem;
       border-radius: 8px;
       background-color: white;
@@ -16,10 +16,7 @@ const activateAccount = (code) => {
       right: 0;
       margin-left: auto;
       margin-right: auto;
-      padding-left: 2rem;
-      padding-right: 2rem;
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      padding: 2rem;
     "
   >
     <tbody>
@@ -28,15 +25,15 @@ const activateAccount = (code) => {
           <h1 style="margin: 0px">¡Bienvenido!</h1>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
-            Estamos emocionados de que empieces. Primero, debes confirmar tu
-            cuenta. Simplemente presione el botón de abajo.
+            Estamos emocionados de que empieces. Primero, debes confirmar tu cuenta. Simplemente
+            presione el botón de abajo.
           </p>
         </td>
       </tr>
-      <tr>
+      <tr style="height: 100px">
         <td>
           <a
             href="${activationUrl}"
@@ -53,15 +50,14 @@ const activateAccount = (code) => {
           </a>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
-            Si eso no funciona, copie y pegue el siguiente enlace en su
-            navegador:
+            Si eso no funciona, copie y pegue el siguiente enlace en su navegador:
           </p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p
             style="
@@ -71,24 +67,24 @@ const activateAccount = (code) => {
               font-size: 18px;
             "
           >
-          ${activationUrl}
+            ${activationUrl}
           </p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
-            Si tiene alguna pregunta, solo responda a este correo
-            electrónico; siempre estaremos encantados de ayudarle.
+            Si tiene alguna pregunta, solo responda a este correo electrónico; siempre estaremos
+            encantados de ayudarle.
           </p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td style="vertical-align: bottom">
           <p style="margin: 0px; font-size: 18px">Atentamente:</p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">Be all</p>
         </td>
@@ -105,7 +101,7 @@ const recoverPassword = (code) => {
   <div style="width: 100%; height: 6rem; background-color: #F3D3C4"></div>
   <table
     style="
-      width: 60%;
+      width: 100%;
       height: 40rem;
       border-radius: 8px;
       background-color: white;
@@ -116,10 +112,7 @@ const recoverPassword = (code) => {
       right: 0;
       margin-left: auto;
       margin-right: auto;
-      padding-left: 2rem;
-      padding-right: 2rem;
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      padding: 2rem;
     "
   >
     <tbody>
@@ -128,7 +121,7 @@ const recoverPassword = (code) => {
           <h1 style="margin: 0px">¿Olvidaste tu contraseña?</h1>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
             ¡Esta bien, suele pasar! Este es tu código pin para resetear tu
@@ -142,7 +135,7 @@ const recoverPassword = (code) => {
         </td>
       </tr>
 
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
             Si tiene alguna pregunta, solo responda a este correo
@@ -150,12 +143,12 @@ const recoverPassword = (code) => {
           </p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td style="vertical-align: bottom">
           <p style="margin: 0px; font-size: 18px">Atentamente:</p>
         </td>
       </tr>
-      <tr style="text-align: justify">
+      <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">Be all</p>
         </td>
