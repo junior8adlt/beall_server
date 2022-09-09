@@ -155,6 +155,13 @@ class Course {
     }
     return course.update(data);
   }
+  static async updateCourseReview(id, data) {
+    const courseReview = await CourseReviewModel.findOne({ where: { id } });
+    if (!courseReview) {
+      throw notFound();
+    }
+    return courseReview.update(data);
+  }
   static async deleteCourseReview(id) {
     try {
       await CourseReviewModel.destroy({

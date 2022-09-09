@@ -125,6 +125,10 @@ const resolvers = {
       validateAuthAdmin(context);
       return CourseController.updateCourse(id, input);
     },
+    updateCourseReview: (_, { id, input }, context) => {
+      validateAuth(context);
+      return CourseController.updateCourseReview(id, input);
+    },
     deleteCourseReview: (_, { id }, context) => {
       validateAuthAdmin(context);
       return CourseController.deleteCourseReview(id);

@@ -73,6 +73,7 @@ const globalTypeDefs = `
       saveCourse(input: CourseInput!): Course
       updateCourse(id: Int!, input: CourseInput): Course
       deleteCourse(id: Int!): Boolean
+      updateCourseReview(id: Int!, input: CreateCourseReviewInput): CourseReview
       deleteCourseReview(id: Int!): Boolean
       # userCourseSchema
       createUserCourse(input: [Int]!): Boolean
