@@ -60,6 +60,7 @@ const typeDef = `
       ${courseReviewSharedProperties}
     }
     type CourseReviewUser {
+      course: Course
       ${courseReviewSharedProperties}
       user: User
     }
@@ -88,6 +89,10 @@ const resolvers = {
         userId = context.user.id;
       }
       return CourseController.get(id, userId);
+    },
+    courseReviews: (_, { courseId }, context) => {
+      validateAuth(context);
+      return CourseController.getCourseReviews(courseId);
     },
     courses: (_, { title, category }, context) => {
       let userId = 0;

@@ -173,6 +173,25 @@ class Course {
       return false;
     }
   }
+
+  static async getCourseReviews(id) {
+    const where = id ? { courseId: id } : {};
+    const reviews = await CourseReviewModel.findAll({
+      where,
+      include: [
+        {
+          model: UserModel,
+          required: true,
+        },
+        {
+          model: CourseModel,
+          required: true,
+          where,
+        },
+      ],
+    });
+    return reviews;
+  }
 }
 
 module.exports = Course;

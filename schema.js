@@ -47,6 +47,7 @@ const globalTypeDefs = `
       consultancieById(id: ID!): Consultancie
       # courseSchema 
       course(id: Int!): CourseView
+      courseReviews(courseId: Int): [CourseReviewUser]
       courses(title: String, category: Category): [Courses]
       categories: [String]
       # userMediaSchema
