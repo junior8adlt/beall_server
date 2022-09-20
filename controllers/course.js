@@ -186,7 +186,6 @@ class Course {
         {
           model: CourseModel,
           required: true,
-          where,
         },
       ],
     });
