@@ -43,7 +43,7 @@ const sendEmail = async (template, emailData) => {
       secure: true, // true for 465, false for other ports
       auth: {
         type: 'OAuth2',
-        user: 'palomadltorre90@gmail.com', // generated ethereal user
+        user: 'servicio.beall@gmail.com', // generated ethereal user
         clientId: process.env.GOOGLE_CLIENT_ID,
         accessToken,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -53,7 +53,7 @@ const sendEmail = async (template, emailData) => {
 
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: '"Be all  👻" <palomadltorre90@gmail.com>', // sender address
+      from: '"Be all No Reply" <servicio.beall@gmail.com>', // sender address
       to, // list of receivers
       subject, // Subject line
       html: template, // html body

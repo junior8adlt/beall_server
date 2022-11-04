@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      instructions: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
       is_free: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

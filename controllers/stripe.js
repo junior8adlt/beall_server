@@ -44,7 +44,7 @@ class Stripe {
         // }),
 
         success_url: `${req.headers.origin}/success?courseId=${courseId}`,
-        cancel_url: `${req.headers.origin}/cursos`,
+        cancel_url: `${req.headers.origin}/formacion`,
       };
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create(params);

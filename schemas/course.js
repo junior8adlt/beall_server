@@ -8,6 +8,7 @@ const courseSharedProperties = `
   shortDescription: String
   isFree: Boolean
   coverImageUrl: String
+  instructions: String
   price: Int
   urlVideos: String
   zoomLink: String

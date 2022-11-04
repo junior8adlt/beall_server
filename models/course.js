@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      instructions: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       isFree: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
