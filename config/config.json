@@ -14,10 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "be_all_user",
-    "password": "XES2FJAlOQv2rVeA2lj9BsdloS72KVmv",
-    "database": "be_all",
-    "host": "dpg-cc3gifqrrk05b6o589p0-a.oregon-postgres.render.com",
+    "username": "beall",
+    "password": "Beall2022",
+    "database": "postgres",
+    "host": "beallfam.c0iec8wyqts2.us-east-1.rds.amazonaws.com",
     "dialect": "postgres",
     "port": 5432,
     "dialectOptions": {

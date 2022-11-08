@@ -44,7 +44,7 @@ async function startApolloServer(typeDefs, resolvers) {
     app.use('/api', expressRoutes);
     server.applyMiddleware({ app });
     const { NODE_ENV, HOST, PORT } = env;
-    await new Promise((resolve) => httpServer.listen({ port: PORT, host: HOST }, resolve));
+    await new Promise((resolve) => httpServer.listen(PORT, resolve));
 
     mercadopago.configure({
       access_token: env[NODE_ENV].mercadoPago,
