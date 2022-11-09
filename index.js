@@ -4,7 +4,7 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const fs = require('fs');
 // SDK de Mercado Pago
 const mercadopago = require('mercadopago');
 require('dotenv').config({ path: __dirname + '/.env' });
@@ -14,10 +14,15 @@ const env = require('./config/env');
 
 const { globalTypeDefs, globalResolvers } = require('./schema');
 
+const httpOptions = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+};
+
 async function startApolloServer(typeDefs, resolvers) {
   try {
     const app = express();
-    const httpServer = http.createServer(app);
+    const httpServer = http.createServer(httpOptions, app);
     const server = new ApolloServer({
       typeDefs,
       resolvers,
