@@ -18,13 +18,14 @@
     "password": "Beall2022",
     "database": "postgres",
     "host": "beallfam.c0iec8wyqts2.us-east-1.rds.amazonaws.com",
-    "dialect": "postgres",
     "port": 5432,
+    "logging": "console.log",
+    "maxConcurrentQueries": 100,
+    "dialect": "postgres",
     "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+      "ssl": "Amazon RDS"
+    },
+    "pool": { "maxConnections": 5, "maxIdleTime": 30 },
+    "language": "en"
   }
 }
