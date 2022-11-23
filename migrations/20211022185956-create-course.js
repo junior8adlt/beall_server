@@ -56,7 +56,7 @@ module.exports = {
         allowNull: false,
       },
       modality: {
-        type: Sequelize.ENUM(['OFFLINE', 'ONLINE', 'PRESENTIAL']),
+        type: Sequelize.ENUM(['OFFLINE', 'ONLINE', 'PRESENTIAL', 'CLASSROOM']),
         allowNull: false,
       },
       average_rate: {

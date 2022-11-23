@@ -130,6 +130,16 @@ class User {
     };
   }
   static async createManyUserCourse(arrayData) {
+    const courseAlreadyExistOnUser = await UserCourseModel.findOne({
+      where: {
+        userId: arrayData[0].userId,
+        courseId: arrayData[0].courseId,
+      },
+    });
+    if (courseAlreadyExistOnUser) {
+      throw new AuthenticationError('Course already exist on user');
+    }
+
     return UserCourseModel.bulkCreate(arrayData);
   }
 }

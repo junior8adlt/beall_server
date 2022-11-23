@@ -44,6 +44,7 @@ const typeDef = `
       OFFLINE
       ONLINE
       PRESENTIAL
+      CLASSROOM
     }
     enum Category {
       PERSONAL
