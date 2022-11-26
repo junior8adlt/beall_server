@@ -164,9 +164,23 @@ class Course {
   }
   static async deleteCourseReview(id) {
     try {
+      const courseReview = await CourseReviewModel.findOne({ where: { id } });
+      if (!courseReview) {
+        throw notFound();
+      }
       await CourseReviewModel.destroy({
         where: { id },
       });
+      const { courseId } = courseReview;
+      const [avgReview] = await CourseReviewModel.findAll({
+        attributes: [[sequelize.fn('AVG', sequelize.col('rate')), 'avgRate']],
+        where: { courseId },
+        raw: true,
+      });
+      const { avgRate } = avgReview;
+      const course = await CourseModel.findOne({ where: { id: courseId } });
+      course.averageRate = avgRate || 0;
+      await course.save();
       return true;
     } catch (error) {
       console.error(error, '--------------error');
