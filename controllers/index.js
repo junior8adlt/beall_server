@@ -7,7 +7,7 @@ const UserMediaController = require('./userMedia');
 const PaymentLogController = require('./paymentLog');
 const ConsultanciesController = require('./consultancies');
 const StripeController = require('./stripe');
-
+const CouponCodeController = require('./couponCode');
 module.exports = {
   UserController,
   CollaboratorController,
@@ -18,4 +18,5 @@ module.exports = {
   PaymentLogController,
   ConsultanciesController,
   StripeController,
+  CouponCodeController,
 };

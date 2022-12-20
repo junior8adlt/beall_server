@@ -14,6 +14,8 @@ const {
   mercadoPagoResolvers,
   consultancieSchema,
   consultancieResolvers,
+  couponCodeSchema,
+  couponCodeResolvers,
 } = require('./schemas');
 /**
  * PRECAUCIÓN
@@ -33,6 +35,7 @@ const globalTypeDefs = `
     ${userCourseSchema}
     ${mercadoPagoSchema}
     ${consultancieSchema}
+    ${couponCodeSchema}
     type Query {
       # userSchema
       user: User
@@ -49,11 +52,16 @@ const globalTypeDefs = `
       course(id: Int!): CourseView
       courseReviews(courseId: Int): [CourseReviewUser]
       courses(title: String, category: Category): [Courses]
+      courseReviewByCourseAndUser(courseId: Int!): CourseReviewUser
       categories: [String]
       # userMediaSchema
       authImageKit: ImageKitAuth
       # userCourseSchema
       userCourses(title: String): [UserCourse]
+      # couponCodeSchema
+      couponCode(id: ID!): CouponCode
+      couponCodeList(id: Int): [CouponCode]
+      validateCouponCode(couponCodeName: String!): CouponCode
     }
     type Mutation {
       # userSchema
@@ -77,9 +85,13 @@ const globalTypeDefs = `
       updateCourseReview(id: Int!, input: CreateCourseReviewInput): CourseReview
       deleteCourseReview(id: Int!): Boolean
       # userCourseSchema
-      createUserCourse(input: [Int]!): Boolean
+      createUserCourse(input: [Int]!, couponId: Int): Boolean
       # mercadoPagoSchema
       createPreference(input: [PreferenceItemsInput]!): String
+      # couponCodeSchema
+      saveCouponCode(input: CouponCodeInput!): CouponCode
+      updateCouponCode(id: Int!, input: CouponCodeInput): CouponCode
+      deleteCouponCode(id: Int!): Boolean
     }
 `;
 
@@ -93,5 +105,6 @@ module.exports = {
     userCourseResolvers,
     mercadoPagoResolvers,
     consultancieResolvers,
+    couponCodeResolvers,
   ),
 };

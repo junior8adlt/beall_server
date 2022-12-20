@@ -1,10 +1,10 @@
-const { toApolloError } = require("apollo-server-express");
+const { toApolloError } = require('apollo-server-express');
 
-const notFound = () => toApolloError(new Error("Not found"), "NOT_FOUND");
-const emailError = () =>
-  toApolloError(new Error("Can not send email"), "EMAIL_ERROR");
+const notFound = () => toApolloError(new Error('Not found'), 'NOT_FOUND');
+const emailError = () => toApolloError(new Error('No se pudo enviar el correo'), 'EMAIL_ERROR');
 
-const invalidComment = () =>
-  toApolloError(new Error("Invalid comment"), "INVALID_COMMENT");
+const invalidComment = () => toApolloError(new Error('Invalid comment'), 'INVALID_COMMENT');
 
-module.exports = { notFound, emailError, invalidComment };
+const couponExpire = () => toApolloError(new Error('Cupon expirado'), 'COUPON_EXPIRE');
+
+module.exports = { notFound, emailError, invalidComment, couponExpire };

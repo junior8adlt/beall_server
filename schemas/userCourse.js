@@ -31,7 +31,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    createUserCourse: async (_, { input }, context) => {
+    createUserCourse: async (_, { input, couponId }, context) => {
       validateAuth(context);
       const { user } = context;
       try {
@@ -40,7 +40,7 @@ const resolvers = {
           userId: user.id,
           isPay: true,
         }));
-        await UserController.createManyUserCourse(manyUserCourses);
+        await UserController.createManyUserCourse(manyUserCourses, couponId);
         return true;
       } catch (error) {
         return error;

@@ -5,6 +5,7 @@ const {
   user: UserModel,
   recovery_code: RecoveryCodeModel,
   user_course: UserCourseModel,
+  used_coupons: UsedCouponModel,
 } = require('../models');
 const { notFound } = require('../libs/errors');
 const SALT_ROUNDS = 8;
@@ -129,7 +130,7 @@ class User {
       user,
     };
   }
-  static async createManyUserCourse(arrayData) {
+  static async createManyUserCourse(arrayData, couponId) {
     const courseAlreadyExistOnUser = await UserCourseModel.findOne({
       where: {
         userId: arrayData[0].userId,
@@ -139,7 +140,12 @@ class User {
     if (courseAlreadyExistOnUser) {
       throw new AuthenticationError('Course already exist on user');
     }
-
+    if (couponId) {
+      await UsedCouponModel.create({
+        couponId,
+        userId: arrayData[0].userId,
+      });
+    }
     return UserCourseModel.bulkCreate(arrayData);
   }
 }
