@@ -104,15 +104,18 @@ class User {
     return user.update(userData);
   }
   static async login(email, password) {
-    const user = await UserModel.findOne({ where: { email, isActive: true } });
+    const user = await UserModel.findOne({ where: { email } });
     if (!user) {
-      throw new AuthenticationError('Invalid email or password');
+      throw new AuthenticationError('Correo o contraseña incorrectos');
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      throw new AuthenticationError('Invalid email or password');
+      throw new AuthenticationError('Correo o contraseña incorrectos');
     }
 
+    if (!user.isActive) {
+      throw new AuthenticationError('Por favor, active su cuenta');
+    }
     user.timesLoggedIn = user.timesLoggedIn + 1;
     await user.save();
     const { email: userEmail, name, lastName, role } = user;
