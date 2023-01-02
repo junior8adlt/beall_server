@@ -1,7 +1,5 @@
 const { activateAccount, recoverPassword } = require('../constants/emailsThemplates');
 const nodemailer = require('nodemailer');
-const { google } = require('googleapis');
-const OAuth2 = google.auth.OAuth2;
 
 const sendEmailCode = async (code, to) => {
   const template = activateAccount(code);
@@ -17,43 +15,24 @@ const sendEmail = async (template, emailData) => {
   try {
     const { subject = 'Código de activación', to } = emailData;
 
-    const oauth2Client = new OAuth2(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET,
-      'https://developers.google.com/oauthplayground',
-    );
-    oauth2Client.setCredentials({
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const accessToken = new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err, token) => {
-        if (err) return console.log(err);
-        resolve(token);
-      });
-    });
-
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      host: 'smtp.gmail.com',
+      host: 'smtpout.secureserver.net',
+      secure: true,
+      tls: {
+        ciphers: 'SSLv3',
+      },
+      requireTLS: true,
       port: 465,
-      secure: true, // true for 465, false for other ports
+      debug: true,
       auth: {
-        type: 'OAuth2',
-        user: 'servicio.beall@gmail.com', // generated ethereal user
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        accessToken,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: '"Be all No Reply" <servicio.beall@gmail.com>', // sender address
+      from: '"Be all No Reply" <no-reply@beallfam.com>', // sender address
       to, // list of receivers
       subject, // Subject line
       html: template, // html body
