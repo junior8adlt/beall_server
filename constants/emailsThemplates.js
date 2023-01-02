@@ -74,8 +74,11 @@ const activateAccount = (code) => {
       <tr style="text-align: center">
         <td>
           <p style="margin: 0px; font-size: 18px">
-            Si tiene alguna pregunta, solo responda a este correo electrónico; siempre estaremos
-            encantados de ayudarle.
+            Si tiene alguna pregunta, escribenos al siguiente correo electrónico: 
+            <a href='mailto:contacto@beallfam.com'>
+            contacto@beallfam.com
+            </a>
+            siempre estaremos encantados de ayudarle.
           </p>
         </td>
       </tr>
@@ -86,7 +89,7 @@ const activateAccount = (code) => {
       </tr>
       <tr style="text-align: center">
         <td>
-          <p style="margin: 0px; font-size: 18px">Be all</p>
+          <p style="margin: 0px; font-size: 18px">Be All Familiologos</p>
         </td>
       </tr>
     </tbody>
@@ -137,10 +140,13 @@ const recoverPassword = (code) => {
 
       <tr style="text-align: center">
         <td>
-          <p style="margin: 0px; font-size: 18px">
-            Si tiene alguna pregunta, solo responda a este correo
-            electrónico; siempre estaremos encantados de ayudarle.
-          </p>
+        <p style="margin: 0px; font-size: 18px">
+        Si tiene alguna pregunta, escribenos al siguiente correo electrónico: 
+        <a href='mailto:contacto@beallfam.com'>
+        contacto@beallfam.com
+        </a>
+        siempre estaremos encantados de ayudarle.
+      </p>
         </td>
       </tr>
       <tr style="text-align: center">
@@ -150,7 +156,7 @@ const recoverPassword = (code) => {
       </tr>
       <tr style="text-align: center">
         <td>
-          <p style="margin: 0px; font-size: 18px">Be all</p>
+          <p style="margin: 0px; font-size: 18px">Be All Familiologos</p>
         </td>
       </tr>
     </tbody>

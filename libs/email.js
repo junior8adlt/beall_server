@@ -32,7 +32,7 @@ const sendEmail = async (template, emailData) => {
 
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: '"Be all No Reply" <no-reply@beallfam.com>', // sender address
+      from: '"Be All Familiologos No Reply" <no-reply@beallfam.com>', // sender address
       to, // list of receivers
       subject, // Subject line
       html: template, // html body
