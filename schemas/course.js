@@ -96,12 +96,12 @@ const resolvers = {
       validateAuth(context);
       return CourseController.getCourseReviews(courseId);
     },
-    courses: (_, { title, category }, context) => {
+    courses: (_, { title, category, modality }, context) => {
       let userId = 0;
       if (context.user) {
         userId = context.user.id;
       }
-      return CourseController.getFilter(title, category, userId);
+      return CourseController.getFilter(title, category, modality, userId);
     },
     categories: (_, args, context) => {
       // validateAuth(context);

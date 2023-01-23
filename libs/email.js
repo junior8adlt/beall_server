@@ -1,4 +1,4 @@
-const { activateAccount, recoverPassword } = require('../constants/emailsThemplates');
+const { activateAccount, recoverPassword, buyCourse } = require('../constants/emailsThemplates');
 const nodemailer = require('nodemailer');
 
 const sendEmailCode = async (code, to) => {
@@ -9,6 +9,11 @@ const sendEmailCode = async (code, to) => {
 const sendEmailRecoverPasswordCode = async (code, to) => {
   const template = recoverPassword(code);
   return await sendEmail(template, { subject: 'Código de recuperación', to });
+};
+
+const sendEmailWhenUserBuyCourse = async (course, to) => {
+  const template = buyCourse(course);
+  return await sendEmail(template, { subject: 'Compraron un curso', to });
 };
 
 const sendEmail = async (template, emailData) => {
@@ -50,4 +55,4 @@ const sendEmail = async (template, emailData) => {
   }
 };
 
-module.exports = { sendEmailCode, sendEmailRecoverPasswordCode };
+module.exports = { sendEmailCode, sendEmailRecoverPasswordCode, sendEmailWhenUserBuyCourse };

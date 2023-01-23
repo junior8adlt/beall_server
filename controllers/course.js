@@ -41,7 +41,7 @@ class Course {
       user_courses: course.user_courses[0] || null,
     };
   }
-  static async getFilter(title, category, userId) {
+  static async getFilter(title, category, modality, userId) {
     const conditional = { where: {} };
     if (title) {
       conditional.where.title = {
@@ -50,6 +50,9 @@ class Course {
     }
     if (category) {
       conditional.where.category = category;
+    }
+    if (modality) {
+      conditional.where.modality = modality;
     }
     if (userId) {
       conditional.include = [
@@ -204,6 +207,14 @@ class Course {
       ],
     });
     return reviews;
+  }
+  static async getCourseName(id) {
+    const course = await CourseModel.findOne({
+      where: { id },
+      attributes: ['title'],
+      raw: true,
+    });
+    return course;
   }
 }
 

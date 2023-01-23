@@ -51,7 +51,7 @@ const globalTypeDefs = `
       # courseSchema 
       course(id: Int!): CourseView
       courseReviews(courseId: Int): [CourseReviewUser]
-      courses(title: String, category: Category): [Courses]
+      courses(title: String, category: Category, modality: Modality ): [Courses]
       courseReviewByCourseAndUser(courseId: Int!): CourseReviewUser
       categories: [String]
       # userMediaSchema

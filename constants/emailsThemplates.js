@@ -165,4 +165,53 @@ const recoverPassword = (code) => {
   `;
 };
 
-module.exports = { activateAccount, recoverPassword };
+const buyCourse = (courseName) => {
+  return `
+  <div style="background-color: #f4f3ee; height: 100vh">
+      <div style="width: 100%; height: 6rem; background-color: #f3d3c4"></div>
+      <table
+        style="
+          width: 100%;
+          height: 40rem;
+          border-radius: 8px;
+          background-color: white;
+          text-align: center;
+          position: absolute;
+          top: 2rem;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 2rem;
+        "
+      >
+        <tbody>
+          <tr>
+            <td>
+              <h1 style="margin: 0px">¡Grandioso!</h1>
+            </td>
+          </tr>
+          <tr style="text-align: center">
+            <td>
+              <p style="margin: 0px; font-size: 18px">
+                Alguien acaba de comprar el curso ${courseName}
+              </p>
+            </td>
+          </tr>
+          <tr style="text-align: center">
+            <td style="vertical-align: bottom">
+              <p style="margin: 0px; font-size: 18px">Atentamente:</p>
+            </td>
+          </tr>
+          <tr style="text-align: center">
+            <td>
+              <p style="margin: 0px; font-size: 18px">Be All Familiologos</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+};
+
+module.exports = { activateAccount, recoverPassword, buyCourse };

@@ -1,6 +1,7 @@
 const { CourseController, UserController } = require('../controllers');
 const { validateAuth } = require('../libs/auth');
-
+const { emailError } = require('../libs/errors');
+const { sendEmailWhenUserBuyCourse } = require('../libs/email');
 const typeDef = `
   type UserCourse {
     id: ID
@@ -40,7 +41,12 @@ const resolvers = {
           userId: user.id,
           isPay: true,
         }));
+        const courseName = await CourseController.getCourseName(input[0]);
         await UserController.createManyUserCourse(manyUserCourses, couponId);
+        const isEmailSent = await sendEmailWhenUserBuyCourse(courseName, 'fam.be.all@gmail.com');
+        if (!isEmailSent) {
+          throw emailError();
+        }
         return true;
       } catch (error) {
         return error;
