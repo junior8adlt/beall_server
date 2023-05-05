@@ -41,9 +41,12 @@ const resolvers = {
           userId: user.id,
           isPay: true,
         }));
-        const courseName = await CourseController.getCourseName(input[0]);
+        const courseName = await CourseController.getCourseName(input);
         await UserController.createManyUserCourse(manyUserCourses, couponId);
-        const isEmailSent = await sendEmailWhenUserBuyCourse(courseName, 'fam.be.all@gmail.com');
+        const isEmailSent = await sendEmailWhenUserBuyCourse(
+          courseName.title,
+          'fam.be.all@gmail.com',
+        );
         if (!isEmailSent) {
           throw emailError();
         }

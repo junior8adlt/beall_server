@@ -194,7 +194,7 @@ const buyCourse = (courseName) => {
           <tr style="text-align: center">
             <td>
               <p style="margin: 0px; font-size: 18px">
-                Alguien acaba de comprar el curso ${courseName}
+                Alguien acaba de comprar el curso <strong>${courseName}</strong>.
               </p>
             </td>
           </tr>
