@@ -22,13 +22,8 @@ const sendEmail = async (template, emailData) => {
 
     const transporter = nodemailer.createTransport({
       host: 'smtpout.secureserver.net',
-      secure: true,
-      tls: {
-        ciphers: 'SSLv3',
-      },
-      requireTLS: true,
       port: 465,
-      debug: true,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,

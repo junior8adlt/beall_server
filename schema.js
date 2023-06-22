@@ -69,6 +69,7 @@ const globalTypeDefs = `
       updateUser(input: UserUpdateInput): User
       createUser(input: UserInput): User
       activateUser(code: String!): Boolean
+      resendEmail(email: String!): Boolean
       # collaboratorSchema
       createCollaborator(input: CollaboratorInput): Collaborator
       updateCollaborator(id: Int!, input: CollaboratorInput): Collaborator

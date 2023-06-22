@@ -1,10 +1,7 @@
 const { UserController, RecoveryCodeController } = require('../controllers');
 const { validateAuth } = require('../libs/auth');
 const { generateRandomCode } = require('../libs/utils');
-const {
-  sendEmailCode,
-  sendEmailRecoverPasswordCode,
-} = require('../libs/email');
+const { sendEmailCode, sendEmailRecoverPasswordCode } = require('../libs/email');
 const { emailError } = require('../libs/errors');
 
 const sharedProperties = `
@@ -113,6 +110,20 @@ const resolvers = {
     },
     activateUser: async (_, { code }, context) => {
       return UserController.activateUser(code);
+    },
+    resendEmail: async (_, { email }, context) => {
+      const user = await UserController.getUserByEmail(email);
+      const code = generateRandomCode();
+      const recoveryCodeData = {
+        code,
+        userId: user.id,
+      };
+      await RecoveryCodeController.create(recoveryCodeData);
+      const isEmailSent = await sendEmailCode(code, user.email);
+      if (!isEmailSent) {
+        throw emailError();
+      }
+      return true;
     },
   },
 };
