@@ -5,6 +5,7 @@ const typeDef = `
     type CouponCode {
         id: ID
         couponCodeName: String
+        isGlobal: Boolean
         discountPercentage: Int
         courseId: Int
         course: Course
@@ -17,6 +18,7 @@ const typeDef = `
         couponCodeName: String
         discountPercentage: Int
         courseId: Int
+        isGlobal: Boolean
         expirationTime: Date
     }
 `;

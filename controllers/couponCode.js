@@ -3,6 +3,8 @@ const { notFound, couponExpire } = require('../libs/errors');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
+const { Op } = require('sequelize');
+
 const include = [
   {
     model: CourseModel,
@@ -11,33 +13,46 @@ const include = [
 ];
 class CouponCode {
   static async createCoupon(data) {
-    const { couponCodeName, courseId, discountPercentage, expirationTime } = data;
-    if (courseId) {
+    const { couponCodeName, courseId, isGlobal, discountPercentage, expirationTime } = data;
+    let course = null;
+    if (isGlobal && courseId) {
+      throw new Error('No puedes especificar un courseId para un cupón global');
+    }
+
+    if (!isGlobal && !courseId) {
+      throw new Error('Debes especificar un courseId para un cupón no global');
+    }
+
+    if (!isGlobal) {
       const course = await CourseModel.findOne({ where: { id: courseId } });
       if (!course) {
         throw notFound();
       }
-      const validateCouponName = await CouponCodeModel.findOne({
-        where: { couponCodeName },
-      });
-      if (validateCouponName) {
-        throw new Error('Este cupon ya existe');
-      }
-      const utcExpirationTime = dayjs.utc(expirationTime);
-      const couponCode = await CouponCodeModel.create({
-        couponCodeName,
-        courseId,
-        discountPercentage,
-        expirationTime: utcExpirationTime,
-      });
-      const dataWithCourse = {
-        ...couponCode.dataValues,
-        course,
-      };
-      return dataWithCourse;
-    } else {
-      throw notFound();
     }
+    course = await CourseModel.findOne({ where: { id: courseId } });
+    const validateCouponName = await CouponCodeModel.findOne({
+      where: { couponCodeName },
+    });
+    if (validateCouponName) {
+      throw new Error('Este cupón ya existe');
+    }
+
+    const utcExpirationTime = dayjs.utc(expirationTime);
+
+    const couponCode = await CouponCodeModel.create({
+      couponCodeName,
+      courseId: isGlobal ? null : courseId,
+      isGlobal,
+      discountPercentage,
+      expirationTime: utcExpirationTime,
+    });
+
+    const dataWithCourse = {
+      ...couponCode.dataValues,
+      course: isGlobal ? null : course,
+    };
+
+    return dataWithCourse;
   }
   static async updateCoupon(id, data) {
     const { expirationTime, courseId } = data;
@@ -107,13 +122,26 @@ class CouponCode {
     return couponCode;
   }
   static async getAllCoupons(id) {
-    const where = id ? { courseId: id } : {};
-    const couponCode = await CouponCodeModel.findAll({
+    let where = {};
+    const include = [
+      {
+        model: CourseModel,
+        required: false,
+      },
+    ];
+
+    if (id) {
+      where = { courseId: id };
+    } else {
+      where = { [Op.or]: [{ courseId: { [Op.not]: null } }, { courseId: null }] };
+    }
+
+    const couponCodes = await CouponCodeModel.findAll({
       where,
       include,
     });
 
-    return couponCode;
+    return couponCodes;
   }
 }
 
