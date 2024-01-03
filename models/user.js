@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "user",
+    'user',
     {
       id: {
         allowNull: false,
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       gender: {
-        type: DataTypes.ENUM(["MALE", "FAMALE"]),
+        type: DataTypes.ENUM(['MALE', 'FAMALE']),
         allowNull: false,
       },
       age: {
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       role: {
-        type: DataTypes.ENUM(["ADMIN", "USER"]),
+        type: DataTypes.ENUM(['ADMIN', 'USER']),
         allowNull: false,
       },
       isActive: {
@@ -79,14 +79,22 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true,
       underscored: true,
       freezeTableName: true,
-    }
+    },
   );
   User.associate = function (models) {
     User.hasMany(models.recovery_code, {
-      foreignKey: "user_id",
+      foreignKey: 'user_id',
     });
     User.hasMany(models.course_review, {
-      foreignKey: "user_id",
+      foreignKey: 'user_id',
+    });
+    User.hasMany(models.orders, {
+      foreignKey: 'user_id',
+      as: 'orders',
+    });
+    User.hasMany(models.address, {
+      foreignKey: 'user_id',
+      as: 'address',
     });
   };
   return User;

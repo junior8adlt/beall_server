@@ -16,6 +16,12 @@ const {
   consultancieResolvers,
   couponCodeSchema,
   couponCodeResolvers,
+  productSchema,
+  productResolvers,
+  addressSchema,
+  addressResolvers,
+  orderSchema,
+  orderResolvers,
 } = require('./schemas');
 /**
  * PRECAUCIÓN
@@ -36,6 +42,9 @@ const globalTypeDefs = `
     ${mercadoPagoSchema}
     ${consultancieSchema}
     ${couponCodeSchema}
+    ${productSchema}
+    ${addressSchema}
+    ${orderSchema}
     type Query {
       # userSchema
       user: User
@@ -62,6 +71,14 @@ const globalTypeDefs = `
       couponCode(id: ID!): CouponCode
       couponCodeList(id: Int): [CouponCode]
       validateCouponCode(couponCodeName: String!): CouponCode
+      # productSchema
+      products: [Product]
+      # addressSchema
+      getUserAddresses: [Address]
+      # orderSchema
+      getUserOrders: [Order]
+      getAllOrders: [Order]
+      
     }
     type Mutation {
       # userSchema
@@ -93,6 +110,21 @@ const globalTypeDefs = `
       saveCouponCode(input: CouponCodeInput!): CouponCode
       updateCouponCode(id: Int!, input: CouponCodeInput): CouponCode
       deleteCouponCode(id: Int!): Boolean
+      # productSchema
+      createProduct(input: ProductInput!): Product
+      updateProduct(id: Int!, input: ProductInput): Product
+      deleteProduct(id: Int!): Boolean
+      # addressSchema
+      createAddress(input: AddressInput!): Address
+      updateAddress(id: Int!, input: AddressInput): Address
+      deleteAddress(id: Int!): Boolean
+      # orderSchema
+      createOrder(input: OrderInput!): Order
+      updateOrder(id: Int!, input: OrderInput): Order
+      updateOrdershippingStatus(id: Int!, input: ShippingStatusInput): Order
+      deleteOrder(id: Int!): Boolean
+      getMetricsByDateRange(startDate: Date!, endDate: Date!): Metrics
+
     }
 `;
 
@@ -107,5 +139,8 @@ module.exports = {
     mercadoPagoResolvers,
     consultancieResolvers,
     couponCodeResolvers,
+    productResolvers,
+    addressResolvers,
+    orderResolvers,
   ),
 };

@@ -4,13 +4,32 @@ const stripe = require('stripe')(env[NODE_ENV].STRIPE_SECRET_KEY);
 
 class Stripe {
   static async checkout(req, res) {
-    const { title, price, courseId } = req.body;
+    const { title, price, courseId, isProduct, products, shippingPrice } = req.body;
     try {
-      const params = {
-        submit_type: 'pay',
-        mode: 'payment',
-        payment_method_types: ['card'],
-        line_items: [
+      let lineItems;
+      if (isProduct) {
+        lineItems = products.map((product) => ({
+          price_data: {
+            currency: 'mxn',
+            product_data: {
+              name: product.name,
+            },
+            unit_amount: product.price * 100,
+          },
+          quantity: product.quantity,
+        }));
+        lineItems.push({
+          price_data: {
+            currency: 'mxn',
+            product_data: {
+              name: 'Envío',
+            },
+            unit_amount: shippingPrice * 100,
+          },
+          quantity: 1,
+        });
+      } else {
+        lineItems = [
           {
             price_data: {
               currency: 'mxn',
@@ -21,12 +40,23 @@ class Stripe {
             },
             quantity: 1,
           },
-        ],
+        ];
+      }
 
-        success_url: `${req.headers.origin}/success?courseId=${courseId}&isPaid=true`,
-        cancel_url: `${req.headers.origin}/formacion`,
+      const params = {
+        submit_type: 'pay',
+        mode: 'payment',
+        payment_method_types: ['card'],
+        line_items: lineItems,
+        success_url: isProduct
+          ? `${req.headers.origin}/paymentSuccess`
+          : `${req.headers.origin}/success?courseId=${courseId}&isPaid=true`,
+        cancel_url: isProduct
+          ? `${req.headers.origin}/paymentFailed`
+          : `${req.headers.origin}/formacion`,
       };
-      // Create Checkout Sessions from body params.
+
+      // Crear sesiones de pago (Checkout Sessions) con los parámetros del cuerpo.
       const session = await stripe.checkout.sessions.create(params);
       res.status(200).json(session);
     } catch (err) {

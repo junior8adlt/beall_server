@@ -15,11 +15,11 @@
   },
   "production": {
     "username": "postgres",
-    "password": "sapDrUu6iVaadQKDmEz6",
+    "password": "AG6GcgcCB5A4FCF15E4g14GDFDbaF6cb",
     "database": "railway",
-    "host": "containers-us-west-115.railway.app",
+    "host": "roundhouse.proxy.rlwy.net",
     "dialect": "postgres",
-    "port": 6147,
+    "port": 53136,
     "dialectOptions": {
       "ssl": {
         "require": true,

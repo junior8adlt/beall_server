@@ -1,4 +1,10 @@
-const { activateAccount, recoverPassword, buyCourse } = require('../constants/emailsThemplates');
+const {
+  activateAccount,
+  recoverPassword,
+  buyCourse,
+  senReceip,
+  orderShipped,
+} = require('../constants/emailsThemplates');
 const nodemailer = require('nodemailer');
 
 const sendEmailCode = async (code, to) => {
@@ -14,6 +20,32 @@ const sendEmailRecoverPasswordCode = async (code, to) => {
 const sendEmailWhenUserBuyCourse = async (course, to) => {
   const template = buyCourse(course);
   return await sendEmail(template, { subject: 'Compraron un curso', to });
+};
+
+const sendUserReceipt = async (
+  order,
+  firstName,
+  lastName,
+  shippingPrice,
+  to,
+  totalOfProducts,
+  totalQuantityOfProducts,
+) => {
+  const template = senReceip(
+    order,
+    firstName,
+    lastName,
+    shippingPrice,
+    totalOfProducts,
+    totalQuantityOfProducts,
+  );
+  return await sendEmail(template, { subject: `Orden ${order.orderNumber} Completada`, to });
+};
+
+const sendOrderShipped = async (order, to) => {
+  const { shippingGuide, shippingMethod, orderNumber } = order;
+  const template = orderShipped(shippingGuide, shippingMethod);
+  return await sendEmail(template, { subject: `Orden ${orderNumber} Enviada`, to });
 };
 
 const sendEmail = async (template, emailData) => {
@@ -32,7 +64,7 @@ const sendEmail = async (template, emailData) => {
 
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: '"Be All Familiologos No Reply" <no-reply@beallfam.com>', // sender address
+      from: '"Be All Familiologos No Responder" <no-reply@beallfam.com>', // sender address
       to, // list of receivers
       subject, // Subject line
       html: template, // html body
@@ -50,4 +82,10 @@ const sendEmail = async (template, emailData) => {
   }
 };
 
-module.exports = { sendEmailCode, sendEmailRecoverPasswordCode, sendEmailWhenUserBuyCourse };
+module.exports = {
+  sendEmailCode,
+  sendEmailRecoverPasswordCode,
+  sendEmailWhenUserBuyCourse,
+  sendUserReceipt,
+  sendOrderShipped,
+};

@@ -10,7 +10,10 @@ const {
   typeDef: consultancieSchema,
   resolvers: consultancieResolvers,
 } = require('./consultancies');
+const { typeDef: productSchema, resolvers: productResolvers } = require('./product');
+const { typeDef: addressSchema, resolvers: addressResolvers } = require('./address');
 const { typeDef: couponCodeSchema, resolvers: couponCodeResolvers } = require('./coupon_code');
+const { typeDef: orderSchema, resolvers: orderResolvers } = require('./order');
 
 module.exports = {
   userSchema,
@@ -29,4 +32,10 @@ module.exports = {
   consultancieResolvers,
   couponCodeSchema,
   couponCodeResolvers,
+  productSchema,
+  productResolvers,
+  addressSchema,
+  addressResolvers,
+  orderSchema,
+  orderResolvers,
 };

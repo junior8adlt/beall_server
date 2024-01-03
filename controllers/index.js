@@ -8,6 +8,9 @@ const PaymentLogController = require('./paymentLog');
 const ConsultanciesController = require('./consultancies');
 const StripeController = require('./stripe');
 const CouponCodeController = require('./couponCode');
+const ProductsController = require('./products');
+const AddressController = require('./address');
+const OrdersController = require('./orders');
 module.exports = {
   UserController,
   CollaboratorController,
@@ -19,4 +22,7 @@ module.exports = {
   ConsultanciesController,
   StripeController,
   CouponCodeController,
+  ProductsController,
+  AddressController,
+  OrdersController,
 };
