@@ -5,6 +5,7 @@ const typeDef = `
 type Product {
   id: ID
   name: String
+  shortDescription: String
   description : String
   price: Float
   images: [String]
@@ -16,6 +17,7 @@ type Product {
 
 input ProductInput {
     name: String
+    shortDescription: String
     description : String
     price: Float
     images: [String]
