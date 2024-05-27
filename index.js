@@ -5,7 +5,6 @@ const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-// SDK de Mercado Pago
 const mercadopago = require('mercadopago');
 require('dotenv').config({ path: __dirname + '/.env' });
 const { UserController } = require('./controllers');
@@ -24,12 +23,10 @@ async function startApolloServer(typeDefs, resolvers) {
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
       context: async ({ req }) => {
         try {
-          // get the user token from the headers
           const token = req.headers.authorization || '';
           if (!token) {
             return { user: null };
           }
-          // try to retrieve a user with the token
           const user = await UserController.getUserByToken(token.replace('Bearer ', ''));
           return { user };
         } catch (error) {
@@ -38,10 +35,10 @@ async function startApolloServer(typeDefs, resolvers) {
       },
     });
     await server.start();
-    // This middleware should be added before calling `applyMiddleware`.
     app.use(cors());
     app.use(bodyParser.json());
     app.use('/api', expressRoutes);
+
     server.applyMiddleware({ app });
     const { NODE_ENV, HOST, PORT } = env;
     await new Promise((resolve) => httpServer.listen(PORT, resolve));

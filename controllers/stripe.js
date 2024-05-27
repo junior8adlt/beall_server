@@ -4,7 +4,8 @@ const stripe = require('stripe')(env[NODE_ENV].STRIPE_SECRET_KEY);
 
 class Stripe {
   static async checkout(req, res) {
-    const { title, price, courseId, isProduct, products, shippingPrice } = req.body;
+    const { title, price, courseId, isProduct, products, shippingPrice, isDigital } = req.body;
+    console.log(isDigital, 'isDigital____________');
     try {
       let lineItems;
       if (isProduct) {
@@ -18,16 +19,18 @@ class Stripe {
           },
           quantity: product.quantity,
         }));
-        lineItems.push({
-          price_data: {
-            currency: 'mxn',
-            product_data: {
-              name: 'Envío',
+        if (!isDigital) {
+          lineItems.push({
+            price_data: {
+              currency: 'mxn',
+              product_data: {
+                name: 'Envío',
+              },
+              unit_amount: shippingPrice * 100,
             },
-            unit_amount: shippingPrice * 100,
-          },
-          quantity: 1,
-        });
+            quantity: 1,
+          });
+        }
       } else {
         lineItems = [
           {
@@ -48,9 +51,12 @@ class Stripe {
         mode: 'payment',
         payment_method_types: ['card'],
         line_items: lineItems,
-        success_url: isProduct
-          ? `${req.headers.origin}/paymentSuccess`
-          : `${req.headers.origin}/success?courseId=${courseId}&isPaid=true`,
+        success_url:
+          isProduct && !isDigital
+            ? `${req.headers.origin}/paymentSuccess`
+            : isProduct && isDigital
+            ? `${req.headers.origin}/digitalSuccess`
+            : `${req.headers.origin}/success?courseId=${courseId}&isPaid=true`,
         cancel_url: isProduct
           ? `${req.headers.origin}/paymentFailed`
           : `${req.headers.origin}/formacion`,

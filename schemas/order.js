@@ -44,6 +44,7 @@ type ProductOrder {
     price: Float
     quantity: Int
     image: String
+    digitalContent: String
 }
 
 type Metrics {
@@ -57,6 +58,7 @@ input ProductOrderInput {
     price: Float
     quantity: Int
     image: String
+    digitalContent: String
 }
 
 input OrderInput {

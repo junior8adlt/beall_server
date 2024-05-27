@@ -522,62 +522,97 @@ const senReceip = (
                     class="m_-6003843106306148780container"
                   >
                     <tbody>
-                      <tr>
-                        <td
-                          align="left"
-                          style="padding-top: 53px; padding-left: 46px"
-                          class="m_-6003843106306148780padLeft33 m_-6003843106306148780padTop36"
-                        >
-                          <table cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                              <tr>
-                                <td
-                                  class="m_-6003843106306148780headlines"
-                                  style="
-                                    font-family: Arial, Helvetica, sans-serif;
-                                    font-size: 18px;
-                                    font-weight: bold;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: 122%;
-                                    letter-spacing: -0.2px;
-                                    text-align: left;
-                                    color: #1d1d1d;
-                                    padding-bottom: 15px;
-                                  "
-                                >
-                                  Enviar a:
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  class="m_-6003843106306148780addressText m_-6003843106306148780noBotPad"
-                                  style="
-                                    font-family: Arial, Helvetica, sans-serif;
-                                    font-size: 14px;
-                                    font-weight: normal;
-                                    font-style: normal;
-                                    font-stretch: normal;
-                                    line-height: 157%;
-                                    letter-spacing: 0.2px;
-                                    text-align: left;
-                                    color: #707070;
-                                    padding-bottom: 15px;
-                                  "
-                                >
-                                  ${firstName} ${lastName}<br />${order.shippingAddress.street} ${
-    order.shippingAddress.number
-  }${order.shippingAddress.interior ?? ''} ${order.shippingAddress.references ?? ''}<br />${
-    order.shippingAddress.colony
-  }<br />${order.shippingAddress.city}, ${order.shippingAddress.state} ${
-    order.shippingAddress.zipCode
-  } México
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
+                    ${
+                      order.shippingMethod === 'Digital'
+                        ? `
+                        <tr>
+                    <td
+                      align="left"
+                      style="padding-top: 53px; padding-left: 46px"
+                      class="m_-6003843106306148780padLeft33 m_-6003843106306148780padTop36"
+                    >
+                      <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                          <tr>
+                            <td
+                              class="m_-6003843106306148780headlines"
+                              style="
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 18px;
+                                font-weight: bold;
+                                font-style: normal;
+                                font-stretch: normal;
+                                line-height: 122%;
+                                letter-spacing: -0.2px;
+                                text-align: left;
+                                color: #1d1d1d;
+                                padding-bottom: 15px;
+                              "
+                            >
+                              Descarga tu producto desde tus ordenes en la plataforma
+                            </td>
+                          </tr>
+                        `
+                        : `
+                    <tr>
+                    <td
+                      align="left"
+                      style="padding-top: 53px; padding-left: 46px"
+                      class="m_-6003843106306148780padLeft33 m_-6003843106306148780padTop36"
+                    >
+                      <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                          <tr>
+                            <td
+                              class="m_-6003843106306148780headlines"
+                              style="
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 18px;
+                                font-weight: bold;
+                                font-style: normal;
+                                font-stretch: normal;
+                                line-height: 122%;
+                                letter-spacing: -0.2px;
+                                text-align: left;
+                                color: #1d1d1d;
+                                padding-bottom: 15px;
+                              "
+                            >
+                              Enviar a:
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              class="m_-6003843106306148780addressText m_-6003843106306148780noBotPad"
+                              style="
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 14px;
+                                font-weight: normal;
+                                font-style: normal;
+                                font-stretch: normal;
+                                line-height: 157%;
+                                letter-spacing: 0.2px;
+                                text-align: left;
+                                color: #707070;
+                                padding-bottom: 15px;
+                              "
+                            >
+                              ${firstName} ${lastName}<br />${order.shippingAddress.street} ${
+                            order.shippingAddress.number
+                          }${order.shippingAddress.interior ?? ''} ${
+                            order.shippingAddress.references ?? ''
+                          }<br />${order.shippingAddress.colony}<br />${
+                            order.shippingAddress.city
+                          }, ${order.shippingAddress.state} ${order.shippingAddress.zipCode} México
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                    `
+                    }
+                     
 
                       <tr>
                         <td

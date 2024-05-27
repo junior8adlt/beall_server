@@ -9,7 +9,9 @@ type Product {
   description : String
   price: Float
   images: [String]
-    stock: Int
+  stock: Int
+  isDigital: Boolean
+  digitalContent: String
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
@@ -22,6 +24,8 @@ input ProductInput {
     price: Float
     images: [String]
     stock: Int
+    isDigital: Boolean
+    digitalContent: String
     }
     `;
 const resolvers = {

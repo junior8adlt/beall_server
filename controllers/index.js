@@ -11,6 +11,7 @@ const CouponCodeController = require('./couponCode');
 const ProductsController = require('./products');
 const AddressController = require('./address');
 const OrdersController = require('./orders');
+const FirebaseController = require('./firebase');
 module.exports = {
   UserController,
   CollaboratorController,
@@ -25,4 +26,5 @@ module.exports = {
   ProductsController,
   AddressController,
   OrdersController,
+  FirebaseController,
 };

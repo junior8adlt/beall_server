@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       shippingMethod: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       paymentMethod: {
         type: DataTypes.TEXT,
@@ -40,13 +40,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       shippingAddress: {
         type: DataTypes.JSON,
-        allowNull: false,
+        allowNull: true,
       },
       notesComments: {
         type: DataTypes.TEXT,
       },
       products: {
-        type: Array(DataTypes.JSONB),
+        type: DataTypes.ARRAY(DataTypes.JSONB),
       },
       createdAt: {
         allowNull: false,
@@ -68,11 +68,13 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
     },
   );
+
   Order.associate = function (models) {
     Order.belongsTo(models.user, {
       foreignKey: 'user_id',
       as: 'user',
     });
   };
+
   return Order;
 };
